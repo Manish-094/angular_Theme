@@ -1,0 +1,43 @@
+{
+  "User": [
+    {
+      "username": "manish patel",
+      "emailId": "manish@gmail.com",
+      "password": "Manish@1234",
+      "cnfpassword": "Manish@1234",
+      "id": 1
+    },
+    {
+      "username": "manish patel",
+      "emailId": "manish@gmail.com",
+      "password": "Manish@1234",
+      "cnfpassword": "Manish@1234",
+      "id": 2
+    },
+    {
+      "username": "anmiesh",
+      "emailId": "animesh@gmail.com",
+      "password": "Animesh@123",
+      "cnfpassword": "Animesh@123",
+      "id": 3
+    },
+    {
+      "username": "jai",
+      "emailId": "jai@gmail.com",
+      "password": "Jai@1234",
+      "cnfpassword": "Jai@1234",
+      "id": 4
+    },
+    {
+      "username": "tgbdhtrhbty",
+      "emailId": "peter@gmail.com",
+      "password": "Peter@1234",
+      "cnfpassword": "Peter@1234",
+      "id": 5
+    }
+  ],
+  "userLogin": [],
+  "profile": {
+    "name": "typicode"
+  }
+}

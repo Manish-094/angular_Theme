@@ -1,0 +1,161 @@
+<div class="hello">
+    <!-- <hr class="bg-danger pt-3"> -->
+    <!-- <div class="login-logo ">
+        <div class="text-center p-1 ">
+        <span class="db"><img src="https://pms.tridhyatech.com/images/admin_images/logo_inverse.png" width="350" alt="logo"></span>
+        </div>
+        </div>     -->
+<div class="container-fluid  signup-container ">
+    <div class="signup-cont mt-5">
+        <div   class="row d-flex  justify-content-center align-items-center mx-auto justify-content-between ">
+            <div class="col-md-7   pb-5 col-12 col-sm-12">
+                
+                <picture>
+                    <img src="/assets/images/pages/register-v2.svg" alt=""class="img-fluid">
+                </picture>
+            </div>
+            <div class="col-md-4 col-12 card  pt-4 pl-4 pr-4  " >
+                <div >
+                    <h1>Adventure starts here 🚀</h1>
+                    <div class="py-3">
+                        <p>Make your app management easy and fun !</p>
+                    </div>
+                </div>
+                
+                <form [formGroup]="contactForm" (ngSubmit)="UsersignUp(contactForm.value)" novalidate>
+                    
+                    <div class="form-group p-1">
+                        <label for="first_name">FirstName</label>
+                        <input type="text" name="first_name"  placeholder="firstName" class="form-control pl-2" formControlName="first_name">
+                        <small *ngIf=" isFormValid || !f.first_name?.valid && (f.first_name?.dirty || f.first_name?.touched)" class="form-text">
+                            firstName is Required *
+                        </small> 
+                    </div>
+                    <div class="form-group p-1">
+                        <label for="last_name">LastName</label>
+                        <input type="text" name="lastname"  placeholder="lastName" class="form-control pl-2" formControlName="last_name">
+                        <small *ngIf="isFormValid  || !f.last_name?.valid && (f.last_name?.dirty || f.last_name?.touched)" class="form-text">
+                            lastName is Required *
+                        </small> 
+                    </div>
+                    <div class="form-group p-1">
+                        <label for="company">Company</label>
+                        <input type="text" name="company"  placeholder="company" class="form-control pl-2" formControlName="company">
+                        <small *ngIf=" isFormValid || !f.company?.valid && (f.company?.dirty || f.company?.touched)" class="form-text">
+                            Company is Required *
+                        </small> 
+                    </div>
+                    <div class="form-group p-1">
+                        <label for="email">Email</label>
+                        <input type="email" name="email"  placeholder="Email" class="form-control pl-2" formControlName="email">
+                        <small *ngIf="isFormValid  || !f.email?.valid && (f.email?.dirty || f.email?.touched)">
+                            <small [hidden] = "!f.email?.errors?.['required']" class="form-text"> Email is Required *</small>
+                            <small [hidden]="!f.email?.errors?.['email']" class="form-text">Invalid Email Id.</small>
+                        </small> 
+                        
+                    </div>
+
+                    <div class="form-group p-1 ">
+                    <label for="password">Password</label>
+
+                        <input type="password" formControlName="password"
+                        class="form-control pl-2 " placeholder="············">
+                        
+                        <small *ngIf="isFormValid  || !f.password?.valid && (f.password?.dirty || f.password?.touched)">
+                            <small [hidden] = "!f.password?.errors?.['required']" class="form-text">
+                                Password is Required *
+                              </small>
+                              <small [hidden] = "!f.password?.errors?.['passwordStrength']" class="form-text">
+                                Your password must have lower case, upper case and numeric characters.
+                              </small>
+                              <small [hidden] = "!f.password?.errors?.['minlength']" class="form-text">
+                                Must be at least 8 characters.
+                              </small>
+                        </small> 
+                    </div>
+                    <div class="form-group p-1">
+                        <label for="first_name">Confirm Password</label>
+                        <input type="password" name="cnfpassword"  placeholder="Confirm Password" class="form-control pl-2"  formControlName="cnfpassword">
+                        <small *ngIf="isFormValid  || !f.cnfpassword?.valid && (f.cnfpassword?.dirty || f.cnfpassword?.touched)">
+                              <small [hidden] = "!f.cnfpassword?.errors?.['required']" class="form-text">
+                                Confirm Password is required *
+                              </small>
+                              <small [hidden]="!f.cnfpassword?.errors?.['confirmPasswordValidator']"> confirm password didn't match.</small>
+                        </small> 
+                    </div>
+                    <div class="form-group p-1">
+                        <input type="checkbox" class="ml-1 ">
+                        <span class="pl-3">I agree to <a href="" class="privacy">privacy policy & terms</a></span>
+                    </div>
+                    <div class="form-group p-1 ">
+                        <button class="btn btn-info" type="submit" >Sign Up</button>
+                    </div>
+    
+                    <div class="form-group pb-3 pt-4  alredy">
+                        <span>Already Have an Account ?</span><a [routerLink]="['/auth/login']" class="nav-item"> Click to Login</a>
+                        <!-- <h5 class="text-center">or</h5>
+                      <div class="signup-icon">
+                        <a ><i class="fa linkedin fa-2x fa-linkedin"></i></a>
+                        <a ><i class="fa facebook fa-2x fa-facebook"></i></a>
+                        <a ><i class="fa github fa-2x fa-github"></i></a>
+                        <a ><i class="fa google fa-2x fa-google"></i></a>
+                      </div> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+      
+
+    
+
+<!--login area-->
+
+    
+   
+<!--     
+    <div *ngIf="showLogin" class="row mx-auto login-row  mt-5 ">
+      <div class="col-md-10 container-fluid">
+        <div class="row mx-auto justify-content-center  justify-content-between ">
+             <div class="col-md-6">
+            <picture>
+                <img src="/assets/images/pages/login-v2-dark.svg" alt="signup-img" class="img-fluid">
+            </picture>
+        </div>
+            <div class="col-md-6  mt-2   p-5">
+                <form [formGroup] = "LoginForm" (ngSubmit)="userLogin()" class="form" >
+                   
+                    <div class="form-group p-1">
+                        <label for="email">Email</label>
+                        <input type="email" name="email"  placeholder="Enter Email.." class="form-control w-75"  formControlName="emailId">
+                        <small *ngIf="!emailId?.valid && (emailId?.dirty || emailId?.touched)">
+                            <small [hidden] = "!emailId?.errors?.['required']" class="form-text"> Email is Required *</small>
+                            <small [hidden]="!emailId?.errors?.['email']" class="form-text">Invalid Email Id.</small>
+                        </small> 
+                    </div>
+                    <div class="form-group p-1">
+                        <label for="password">Password</label>
+                        <input type="password" name="password"  placeholder="Enter Password.." class="form-control w-75" formControlName="password">
+                    </div>
+                    <div class="form-group p-1 mt-4">
+                        <button class="btn btn-info w-75" type="submit">Login</button>
+                    </div>
+                    <div class="form-group p-1 alredy">
+                        <span>Don't Have an Account ?</span><a (click)="openSignUp()" class="nav-item"> Create an account</a>
+                    </div>
+                    <h5 class="text-center">or</h5>
+                    <div class="signup-icon">
+                      <a ><i class="fa linkedin fa-1x fa-linkedin"></i></a>
+                      <a ><i class="fa facebook fa-1x fa-facebook"></i></a>
+                      <a ><i class="fa github fa-1x fa-github"></i></a>
+                      <a ><i class="fa google fa-1x fa-google"></i></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+      </div>
+        
+    </div> -->
+</div>
+
+</div>

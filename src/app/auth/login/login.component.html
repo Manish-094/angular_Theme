@@ -1,0 +1,146 @@
+<div class="container-fluid login-container">
+  <div class="row mx-auto login-row d-flex justify-content-center align-items-center justify-content-between">
+    <div class="col-md-7">
+      <picture>
+        <img src="/assets/images/pages/login-v2-dark.svg" alt="signup-img" class="img-fluid" />
+      </picture>
+    </div>
+    <div class="col-md-4 login-row py-5">
+      <div class="card">
+        <div class="card-body px-5">
+          <div class="mb-md-5 mt-md-4">
+            <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+            <p class="plzenterusernamepass fw-bold mb-5">
+              Please enter your username and password !
+            </p>
+            <!-- <p class=" text-danger fw-bold plzenterusernamepass">{{LoginError}}</p> -->
+            <form [formGroup]="LoginForm" (ngSubmit)="userLogin(LoginForm.value)">
+              <div class="mb-2">
+                <label for="">Email</label>
+                <input type="email" class="form-control form-control-lg" placeholder="Email" formControlName="email" />
+              </div>
+              <small *ngIf="
+                  isFormValid == true ||
+                  (!f.email?.valid && (f.email?.dirty || f.email?.touched))
+                ">
+                <small [hidden]="!f.email?.errors?.['required']" class="form-text">
+                  Email is Required *</small>
+                <small [hidden]="!f.email?.errors?.['email']" class="form-text">Invalid Email Id.</small>
+              </small>
+              <label for="">Password</label>
+
+              <div class="input-group input-group-merge form-password-toggle mb-2">
+                <input [type]="passwordTextType ? 'text' : 'password'" formControlName="password"
+                  class="form-control form-control-merge" placeholder="············"
+                  aria-describedby="register-password" tabindex="3" />
+
+                <div class="input-group-append">
+                  <span class="input-group-text cursor-pointer"><i class="feather font-small-4" [ngClass]="{
+                        'icon-eye-off': passwordTextType,
+                        'icon-eye': !passwordTextType
+                      }" (click)="togglePasswordTextType()"></i></span>
+                </div>
+              </div>
+              <small *ngIf="
+                  isFormValid == true ||
+                  (!f.password?.valid &&
+                    (f.password?.dirty || f.password?.touched))
+                ">
+                <small [hidden]="!f.password?.errors?.['required']" class="form-text">
+                  Password is Required *
+                </small>
+              </small>
+
+              <div class="mb-2">
+                <label for="">User_Type</label>
+                <select class="form-control" formControlName="user_type">
+                  <option value="2">User</option>
+                  <option value="1">Admin</option>
+                </select>
+                <small *ngIf="
+                    isFormValid == true ||
+                    (!f.user_type?.valid &&
+                      (f.user_type?.dirty || f.user_type?.touched))
+                  ">
+                  <small [hidden]="!f.user_type?.errors?.['required']" class="form-text">
+                    User_Type is Required *
+                  </small>
+                </small>
+              </div>
+
+              <p class="pb-lg-2 pt-2">
+                <a [routerLink]="['/userAuth/resetPassword']">Forgot password ?</a>
+              </p>
+
+              <button class="btn btn-primary btn-lg my-2 px-5" type="submit">
+                Login
+              </button>
+            </form>
+            <div class="d-flex justify-content-center text-center mt-4 pt-1">
+              <a href="#!"><i class="fa fa-facebook-f fa-lg"></i></a>
+              <a href="#!"><i class="fa fa-twitter fa-lg mx-4 px-2"></i></a>
+              <a href="#!"><i class="fa fa-google fa-lg"></i></a>
+            </div>
+          </div>
+
+          <div>
+            <p class="mb-0 donthaveaccount">
+              Don't have an account?
+              <a [routerLink]="['/auth/register']" class="signup fw-bold">Sign Up</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 
+<section class=" gradient-custom bg-dark">
+    <div class="container-fluid py-5 ">
+      <div class="row mx-auto justify-content-center  justify-content-between">
+        <div class="col-md-4 col-md-12 col-12">
+          <picture>
+            <img src="/assets/images/pages/login-v2-dark.svg" alt="login-img" class="img-fluid">
+        </picture>
+        </div>
+        <div class="col-12 col-md-3 col-lg-6 col-xl-5">
+          <div class="card bg-dark text-white" style="border-radius: 1rem; border: 1px solid white;">
+            <div class="card-body p-5 text-center">
+  
+              <div class="mb-md-5 mt-md-4 pb-5">
+  
+                <h2 class="fw-bold text-white mb-2 text-uppercase">Login</h2>
+                <p class="text-white-50  plzenterusernamepass fw-bold  mb-5">Please enter your username and password !</p>
+                <p class=" text-danger fw-bold plzenterusernamepass">{{LoginError}}</p>
+                <form [formGroup] = "LoginForm" (ngSubmit)="userLogin()">
+                <div class="form-outline form-white mb-4">
+                  <input type="email"  class="form-control form-control-lg bg-dark" placeholder="Username" formControlName="emailId" />
+                </div>
+  
+                <div class="form-outline form-white mb-4">
+                  <input type="password" class="form-control form-control-lg bg-dark" placeholder="Password" formControlName="password"/>
+                </div>
+  
+                <p class="  pb-lg-2"><a class="text-white-50" href="#!">Forgot password ?</a></p>
+  
+                <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
+            </form>
+                <div class="d-flex justify-content-center text-center mt-4 pt-1">
+                  <a href="#!" class="text-white"><i class="fa fa-facebook-f fa-lg"></i></a>
+                  <a href="#!" class="text-white"><i class="fa fa-twitter fa-lg mx-4 px-2"></i></a>
+                  <a href="#!" class="text-white"><i class="fa fa-google fa-lg"></i></a>
+                </div>
+  
+              </div>
+  
+              <div>
+                <p class="mb-0 donthaveaccount">Don't have an account? <a [routerLink]="['/userAuth/register']" class="text-white-50 signup fw-bold">Sign Up</a>
+                </p>
+              </div>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> -->

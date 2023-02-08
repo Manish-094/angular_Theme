@@ -1,0 +1,103 @@
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+input[type="text"] {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  input[type="email"] {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  input[type="password"] {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  button{
+    font-size: 1.5rem;
+    width: 100%;
+    color: black !important;
+  }
+// .hello{
+//   // background-color: rgba(0, 0, 0, 0.774);
+//   background-color: #343a40 ;
+//  // height: 100vh;
+// }
+
+
+  .alredy a{
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: blue;
+  }
+  .alredy span{
+   font-size: 1.2rem;
+  }
+  .err{
+    color: red;
+    font-size: 2rem;
+  }
+ 
+ input.ng-invalid.ng-touched{
+    border: 1px solid red;
+ }
+small{
+    color: red;
+    font-size: 1rem;
+}
+  .signup-img img{
+    width:45rem;
+
+  }
+  .signup-container{
+    .card{
+        background-color: rgb(247, 250, 247);
+        box-shadow: none;
+    }
+    // .signup-cont{
+
+    //     background-color:rgb(19, 45, 46);
+    // }
+    margin-top: -3rem;
+    .privacy{
+        font-size: 1rem;
+        text-decoration: none;
+    }
+    .signup-icon{
+        text-align: center;
+        margin-top: 2rem;
+    }
+    .signup-icon a{
+        padding: 0rem 2rem;
+        color: rgb(99, 86, 86);
+    }
+    .signup-icon .linkedin{
+        color: blue;
+    }
+    .signup-icon .facebook{
+        color: rgb(56, 144, 245);
+    }
+    .signup-icon .github{
+        color: rgb(77, 53, 53);
+    }
+    .signup-icon .google{
+        color: rgb(16, 185, 236);
+    }
+    .login-row label{
+        font-size: 1.5rem;
+        color: black;
+    }
+    .login-row{
+        background-color: rgb(217, 236, 236);
+    }
+    .login-row .card{
+        background-color: rgb(235, 245, 245);
+    }
+    ::placeholder{
+      font-weight:400;
+    }
+  }

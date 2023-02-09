@@ -1,7 +1,9 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.service';
 import { CoreConfigService } from '@core/services/config.service';
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
+import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs/operators';
 import { UserListService } from '../user-list.service';
@@ -17,21 +19,19 @@ export class UserListComponent implements OnInit {
 
   // Public
   public sidebarToggleRef = false;
-  public rows;
+  public rows : any;
   public selectedOption = 10;
   public ColumnMode = ColumnMode;
   public temp = [];
   public previousRoleFilter = '';
   public previousPlanFilter = '';
   public previousStatusFilter = '';
+  public rowsCount;
 
   public selectRole: any = [
     { name: 'All', value: '' },
-    { name: 'Admin', value: 'Admin' },
-    { name: 'Author', value: 'Author' },
-    { name: 'Editor', value: 'Editor' },
-    { name: 'Maintainer', value: 'Maintainer' },
-    { name: 'Subscriber', value: 'Subscriber' }
+    { name: 'Admin', value: 1 },
+    { name: 'User', value: 2 }
   ];
 
   public selectPlan: any = [
@@ -45,8 +45,8 @@ export class UserListComponent implements OnInit {
   public selectStatus: any = [
     { name: 'All', value: '' },
     { name: 'Pending', value: 'Pending' },
-    { name: 'Active', value: 'Active' },
-    { name: 'Inactive', value: 'Inactive' }
+    { name: 'Active', value: 1 },
+    { name: 'Inactive', value: 2 }
   ];
   public selectedRole = [];
   public selectedPlan = [];
@@ -69,7 +69,8 @@ export class UserListComponent implements OnInit {
   constructor(
     private _userListService: UserListService,
     private _coreSidebarService: CoreSidebarService,
-    private _coreConfigService: CoreConfigService
+    private _coreConfigService: CoreConfigService,
+    private _toastr:ToastrService
   ) {
     this._unsubscribeAll = new Subject();
   }
@@ -77,28 +78,79 @@ export class UserListComponent implements OnInit {
   // Public Methods
   // -----------------------------------------------------------------------------------------------------
 
+
+  
+getUserListData(params){
+  this._userListService.getDataTableRows(params).subscribe((res)=>{
+    if(res.status == 1){
+      this._toastr.success(res.message)
+      this.rows = res.data.data;
+      this.rowsCount = res.data.total;
+      console.log(this.rowsCount,1000);
+      
+      
+    }
+    this.setRole(this.rows);
+    this.setStatus(this.rows);
+
+  })
+}
+
+page(event){
+  console.log(event.offset+1);
+// this.getUserListData('page',event.offset+1)
+const params = new HttpParams()
+.set('page', event.offset+1)
+.set('limit', this.selectedOption)
+this.getUserListData(params)
+  
+}
+
+
+
+setRole(rows){
+  this.rows.forEach(row => {
+    if(row.user_type == 2){
+      row.role = "User"  
+    }
+    else{
+      row.role = 'Admin'
+    }
+
+  });
+}
+
+setStatus(rows){
+  this.rows.forEach(row => {
+    if(row.status == 1)
+    {
+      row.status = 'active'
+    }
+    else if(row.status == 2){
+      row.status = 'inactive'
+    }
+    else{
+      row.status = 'pending'
+    }
+  });
+}
+
+
+Totaldata() {
+  const params = new HttpParams()
+  .set('limit', this.selectedOption)
+  this.getUserListData(params)
+}
+
   /**
    * filterUpdate
    *
    * @param event
    */
   filterUpdate(event) {
-    // Reset ng-select on search
-    this.selectedRole = this.selectRole[0];
-    this.selectedPlan = this.selectPlan[0];
-    this.selectedStatus = this.selectStatus[0];
-
-    const val = event.target.value.toLowerCase();
-    // Filter Our Data
-    const temp = this.tempData.filter(function (d) {
-      return d.fullName.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-
-    // Update The Rows
-    this.rows = temp;
-    // Whenever The Filter Changes, Always Go Back To The First Page
-    this.table.offset = 0;
-
+    const params = new HttpParams()
+    .set('search', this.searchValue)
+    this.getUserListData(params)
   }
 
   /**
@@ -116,10 +168,8 @@ export class UserListComponent implements OnInit {
    * @param event
    */
     filterByRole(event: { value: any; }) {
-      const filter = event ? event.value : '';
-      this.previousRoleFilter = filter;
-      this.temp = this.filterRows(filter, this.previousPlanFilter, this.previousStatusFilter);
-      this.rows = this.temp;
+       const params = new HttpParams().set('user_type',event.value)
+       this.getUserListData(params)
     }
 
     /**
@@ -128,10 +178,7 @@ export class UserListComponent implements OnInit {
    * @param event
    */
   filterByPlan(event: { value: any; }) {
-    const filter = event ? event.value : '';
-    this.previousPlanFilter = filter;
-    this.temp = this.filterRows(this.previousRoleFilter, filter, this.previousStatusFilter);
-    this.rows = this.temp;
+   
   }
 
     /**
@@ -140,10 +187,8 @@ export class UserListComponent implements OnInit {
    * @param event
    */
     filterByStatus(event: { value: any; }) {
-      const filter = event ? event.value : '';
-      this.previousStatusFilter = filter;
-      this.temp = this.filterRows(this.previousRoleFilter, this.previousPlanFilter, filter);
-      this.rows = this.temp;
+      const params = new HttpParams().set('status',event.value)
+       this.getUserListData(params)
     }
 
       /**
@@ -153,21 +198,7 @@ export class UserListComponent implements OnInit {
    * @param planFilter
    * @param statusFilter
    */
-  filterRows(roleFilter: string, planFilter: string, statusFilter: string): any[] {
-    // Reset search on select change
-    this.searchValue = '';
-
-    roleFilter = roleFilter.toLowerCase();
-    planFilter = planFilter.toLowerCase();
-    statusFilter = statusFilter.toLowerCase();
-
-    return this.tempData.filter(row => {
-      const isPartialNameMatch = row.role.toLowerCase().indexOf(roleFilter) !== -1 || !roleFilter;
-      const isPartialGenderMatch = row.currentPlan.toLowerCase().indexOf(planFilter) !== -1 || !planFilter;
-      const isPartialStatusMatch = row.status.toLowerCase().indexOf(statusFilter) !== -1 || !statusFilter;
-      return isPartialNameMatch && isPartialGenderMatch && isPartialStatusMatch;
-    });
-  }
+  
 
 
   // Lifecycle Hooks
@@ -176,6 +207,25 @@ export class UserListComponent implements OnInit {
    * On init
    */
   ngOnInit(): void {
+  /**
+   * status checking
+   */
+   this.getUserListData(HttpParams);
+ 
+
+  /**
+   * role checking
+   */
+
+
+
+  /**
+   * filter by status
+   */
+
+  
+
+
     // Subscribe config change
     this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
       //! If we have zoomIn route Transition then load datatable after 450ms(Transition will finish in 400ms)
@@ -183,12 +233,15 @@ export class UserListComponent implements OnInit {
         setTimeout(() => {
           this._userListService.onUserListChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe(response => {
             this.rows = response;
+            // this.rowsCount = this.rows.data.total;
+            console.log(this.rows.data);
             this.tempData = this.rows;
           });
         }, 450);
       } else {
         this._userListService.onUserListChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe(response => {
           this.rows = response;
+          // this.rowsCount = this.rows.data.total;
           this.tempData = this.rows;
         });
       }

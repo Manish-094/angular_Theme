@@ -41,7 +41,11 @@ import { CoreDirectivesModule } from '@core/directives/directives';
     ],
 
     imports: [
-  
+      HttpClientModule,
+      HttpClientInMemoryWebApiModule.forRoot(FakeDbService, {
+        delay: 0,
+        passThruUnknownUrl: true,
+      }),
       CoreSidebarModule,
       HttpClientModule,
       HttpClientInMemoryWebApiModule,

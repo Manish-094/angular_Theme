@@ -20,33 +20,33 @@ export const menu: CoreMenu[] = [
     title: "Apps & Pages",
     translate: "MENU.APPS.SECTION",
     icon: "package",
-    children: [
-      {
-        id: "slider-management",
-        title: "Slider Management",
-        translate: "MENU.PAGES.SLIDER",
-        type: "item",
-        // icon: 'circle',
-        url: "slider-management",
-      },
-      {
-        id: "contact-us",
-        title: "Contact Us",
-        translate: "MENU.PAGES.CONTACTUS",
-        type: "item",
-        // icon: 'circle',
-        url: "contact-us",
-        // collapsed: true
-      },
-      {
-        id: "about-us",
-        title: "About Us",
-        translate: "MENU.PAGES.ABOUTUS",
-        type: "item",
-        // icon: 'circle',
-        url: "about-us",
-      },
-    ],
+    // children: [
+    //   {
+    //     id: "slider-management",
+    //     title: "Slider Management",
+    //     translate: "MENU.PAGES.SLIDER",
+    //     type: "item",
+    //     // icon: 'circle',
+    //     url: "slider-management",
+    //   },
+    //   {
+    //     id: "contact-us",
+    //     title: "Contact Us",
+    //     translate: "MENU.PAGES.CONTACTUS",
+    //     type: "item",
+    //     // icon: 'circle',
+    //     url: "contact-us",
+    //     // collapsed: true
+    //   },
+    //   {
+    //     id: "about-us",
+    //     title: "About Us",
+    //     translate: "MENU.PAGES.ABOUTUS",
+    //     type: "item",
+    //     // icon: 'circle',
+    //     url: "about-us",
+    //   },
+    // ],
   },
   {
     id: 'users',

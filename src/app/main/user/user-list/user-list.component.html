@@ -8,7 +8,7 @@
         <div class="card-body">
           <div class="users-list-filter">
             <form>
-              <div class="row">
+              <div class="row justify-content-evenly">
                 <div class="col-12 col-md-4">
                   <fieldset class="form-group">
                     <ng-select
@@ -21,18 +21,7 @@
                     ></ng-select>
                   </fieldset>
                 </div>
-                <div class="col-12 col-md-4">
-                  <fieldset class="form-group">
-                    <ng-select
-                      [items]="selectPlan"
-                      [(ngModel)]="selectedPlan"
-                      name="selectedPlan"
-                      bindLabel="name"
-                      placeholder="Select Plan"
-                      (change)="filterByPlan($event)"
-                    ></ng-select>
-                  </fieldset>
-                </div>
+
                 <div class="col-12 col-md-4">
                   <fieldset class="form-group">
                     <ng-select
@@ -45,6 +34,20 @@
                     ></ng-select>
                   </fieldset>
                 </div>
+
+                <div class="col-12 col-md-4">
+                  <fieldset class="form-group">
+                    <ng-select
+                      [items]="selectPlan"
+                      [(ngModel)]="selectedPlan"
+                      name="selectedPlan"
+                      bindLabel="name"
+                      placeholder="Select Plan"
+                      (change)="filterByPlan($event)"
+                    ></ng-select>
+                  </fieldset>
+                </div>
+           
               </div>
             </form>
           </div>
@@ -58,7 +61,7 @@
             <div class="d-flex justify-content-between align-items-center m-1">
               <label class="d-flex align-items-center"
                 >Show
-                <select class="form-control mx-25" [(ngModel)]="selectedOption">
+                <select class="form-control mx-25" (change)="Totaldata()">
                   <option value="10">10</option>
                   <option value="25">25</option>
                   <option value="50">50</option>
@@ -95,11 +98,15 @@
           [headerHeight]="50"
           [footerHeight]="50"
           [scrollbarH]="true"
+          [count]="rowsCount"
+          [externalPaging]="true"
+          (page)="page($event)"
+          
         >
-          <ngx-datatable-column name="User" prop="fullName" [width]="200">
+          <!-- <ngx-datatable-column name="User" prop="fullName" [width]="200">
             <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
               <div class="d-flex align-items-center">
-                <div *ngIf="row.avatar.length > 0; else customAvatar">
+                <div *ngIf="row.avatar?.length > 0; else customAvatar">
                   <img
                     class="rounded-circle mr-1"
                     src="{{ row.avatar }}"
@@ -128,7 +135,7 @@
                 </div>
               </div>
             </ng-template>
-          </ngx-datatable-column>
+          </ngx-datatable-column> -->
           <ngx-datatable-column name="Email" prop="email" [width]="200"></ngx-datatable-column>
           <ngx-datatable-column name="Role" prop="role" [width]="100">
             <ng-template let-role="value" ngx-datatable-cell-template>
@@ -136,10 +143,8 @@
                 <i
                   class="feather font-medium-3"
                   [ngClass]="{
-                    'icon-edit-2 text-info': role == 'Editor',
-                    'icon-settings text-warning': role == 'Author',
-                    'icon-database text-success': role == 'Maintainer',
-                    'icon-user text-primary': role == 'Subscriber',
+            
+                    'icon-user text-primary': role == 'User',
                     'icon-slack text-danger': role == 'Admin'
                   }"
                 ></i>
@@ -147,7 +152,7 @@
               </div>
             </ng-template>
           </ngx-datatable-column>
-          <ngx-datatable-column name="Plan" prop="currentPlan" [width]="100"></ngx-datatable-column>
+          <!-- <ngx-datatable-column name="Plan" prop="currentPlan" [width]="100"></ngx-datatable-column> -->
           <ngx-datatable-column name="Status" prop="status" [width]="50">
             <ng-template let-status="value" ngx-datatable-cell-template>
               <div

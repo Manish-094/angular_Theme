@@ -14,11 +14,11 @@ export class GoToFormGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if(this.userService.canactivate()){
       this.toastrservice.warning("Already Logged in !")
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/main/dashboard']);
       return false;
     }
     else{
-      this.toastrservice.warning("Found Unauthorised First Login !")
+      // this.toastrservice.warning("Found Unauthorised First Login !")
       return true;
     }
   }

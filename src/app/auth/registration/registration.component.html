@@ -27,33 +27,59 @@
                     <div class="form-group p-1">
                         <label for="first_name">FirstName</label>
                         <input type="text" name="first_name"  placeholder="firstName" class="form-control pl-2" formControlName="first_name">
-                        <small *ngIf=" isFormValid || !f.first_name?.valid && (f.first_name?.dirty || f.first_name?.touched)" class="form-text">
-                            firstName is Required *
-                        </small> 
+                        
                     </div>
+                    
+                    <small *ngIf="
+                    isFormValid == true ||
+                    (!f.first_name?.valid && (f.first_name?.dirty || f.first_name?.touched))
+                  ">
+                  <small [hidden]="!f.first_name?.errors?.['required']" class="form-text">
+                    firstName is Required *</small>
+                </small>
+
                     <div class="form-group p-1">
                         <label for="last_name">LastName</label>
                         <input type="text" name="lastname"  placeholder="lastName" class="form-control pl-2" formControlName="last_name">
-                        <small *ngIf="isFormValid  || !f.last_name?.valid && (f.last_name?.dirty || f.last_name?.touched)" class="form-text">
-                            lastName is Required *
-                        </small> 
                     </div>
+
+                    <small *ngIf="
+                    isFormValid == true ||
+                    (!f.last_name?.valid && (f.last_name?.dirty || f.last_name?.touched))
+                  ">
+                  <small [hidden]="!f.last_name?.errors?.['required']" class="form-text">
+                    lastName is Required *</small>
+                </small>
+
                     <div class="form-group p-1">
                         <label for="company">Company</label>
                         <input type="text" name="company"  placeholder="company" class="form-control pl-2" formControlName="company">
-                        <small *ngIf=" isFormValid || !f.company?.valid && (f.company?.dirty || f.company?.touched)" class="form-text">
-                            Company is Required *
-                        </small> 
+                     
                     </div>
+
+                    <small *ngIf="
+                    isFormValid == true ||
+                    (!f.company?.valid && (f.company?.dirty || f.company?.touched))
+                  ">
+                  <small [hidden]="!f.company?.errors?.['required']" class="form-text">
+                    Company is Required  *</small>
+                </small>
+
                     <div class="form-group p-1">
                         <label for="email">Email</label>
                         <input type="email" name="email"  placeholder="Email" class="form-control pl-2" formControlName="email">
-                        <small *ngIf="isFormValid  || !f.email?.valid && (f.email?.dirty || f.email?.touched)">
-                            <small [hidden] = "!f.email?.errors?.['required']" class="form-text"> Email is Required *</small>
-                            <small [hidden]="!f.email?.errors?.['email']" class="form-text">Invalid Email Id.</small>
-                        </small> 
+                       
                         
                     </div>
+
+                    <small *ngIf="
+                    isFormValid == true ||
+                    (!f.email?.valid && (f.email?.dirty || f.email?.touched))
+                  ">
+                  <small [hidden]="!f.email?.errors?.['required']" class="form-text">
+                    Email is Required *</small>
+                  <small [hidden]="!f.email?.errors?.['email']" class="form-text">Invalid Email Id.</small>
+                </small>
 
                     <div class="form-group p-1 ">
                     <label for="password">Password</label>
@@ -61,28 +87,32 @@
                         <input type="password" formControlName="password"
                         class="form-control pl-2 " placeholder="············">
                         
-                        <small *ngIf="isFormValid  || !f.password?.valid && (f.password?.dirty || f.password?.touched)">
-                            <small [hidden] = "!f.password?.errors?.['required']" class="form-text">
-                                Password is Required *
-                              </small>
-                              <small [hidden] = "!f.password?.errors?.['passwordStrength']" class="form-text">
-                                Your password must have lower case, upper case and numeric characters.
-                              </small>
-                              <small [hidden] = "!f.password?.errors?.['minlength']" class="form-text">
-                                Must be at least 8 characters.
-                              </small>
-                        </small> 
+                        
                     </div>
+
+                    <small *ngIf="
+                    isFormValid == true ||
+                    (!f.password?.valid &&
+                      (f.password?.dirty || f.password?.touched))
+                  ">
+                  <small [hidden]="!f.password?.errors?.['required']" class="form-text">
+                    Password is Required *
+                  </small>
+                </small>
+
                     <div class="form-group p-1">
                         <label for="first_name">Confirm Password</label>
                         <input type="password" name="cnfpassword"  placeholder="Confirm Password" class="form-control pl-2"  formControlName="cnfpassword">
-                        <small *ngIf="isFormValid  || !f.cnfpassword?.valid && (f.cnfpassword?.dirty || f.cnfpassword?.touched)">
-                              <small [hidden] = "!f.cnfpassword?.errors?.['required']" class="form-text">
-                                Confirm Password is required *
-                              </small>
-                              <small [hidden]="!f.cnfpassword?.errors?.['confirmPasswordValidator']"> confirm password didn't match.</small>
-                        </small> 
+                        
                     </div>
+
+                    <small *ngIf="isFormValid == true || (!f.cnfpassword?.valid && (f.cnfpassword?.dirty || f.cnfpassword?.touched))">
+                        <small [hidden] = "!f.cnfpassword?.errors?.['required']" class="form-text">
+                          Confirm Password is required *
+                        </small>
+                        <small [hidden]="!f.cnfpassword?.errors?.['confirmPasswordValidator']"> confirm password didn't match.</small>
+                  </small> 
+
                     <div class="form-group p-1">
                         <input type="checkbox" class="ml-1 ">
                         <span class="pl-3">I agree to <a href="" class="privacy">privacy policy & terms</a></span>

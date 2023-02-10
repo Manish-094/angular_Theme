@@ -14,6 +14,8 @@ import { Person } from './person';
 })
 export class UserService implements OnInit {
   toastrService: any;
+  isLoggedIn = false;
+
   UserLogin(value: any) {
     throw new Error('Method not implemented.');
   }
@@ -67,6 +69,7 @@ ngOnInit(): void {
   private registrationUrl = apiUrl+"/users/signUp"; //url for signUp api
   private loginUrl = apiUrl+"/users/login";         //url for login api
   private passwordResetUrl = apiUrl+"/users/forgot-password"; //url for resetPassword
+  private userProfile = apiUrl+"/users/profile";             // user Profile 
 
   
   /**
@@ -99,7 +102,7 @@ ngOnInit(): void {
   sendLoginData(person:Person):Observable<any>{
     return this.http.post(this.loginUrl,person).pipe(
       map((data)=>{
-        
+        this.isLoggedIn = true;
         return data;
       }),
       catchError((err)=>{
@@ -149,6 +152,7 @@ ngOnInit(): void {
     return true;
   }
  }
+
 }
 
 

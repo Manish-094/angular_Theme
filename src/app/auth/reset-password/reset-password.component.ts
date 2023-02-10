@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CoreConfigService } from '@core/services/config.service';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -11,7 +12,24 @@ export class ResetPasswordComponent implements OnInit {
 
 
   forgotPassInput !: FormGroup;
-  constructor(private userservice:UserService,private fb:FormBuilder) { }
+  constructor(private userservice:UserService,private fb:FormBuilder,private _coreConfigService:CoreConfigService) { 
+    this._coreConfigService.config = {
+      layout: {
+        navbar: {
+          hidden: true,
+        },
+        menu: {
+          hidden: true,
+        },
+        footer: {
+          hidden: true,
+        },
+        customizer: false,
+        enableLocalStorage: false,
+      },
+    };
+  
+  }
   get f(){
     return this.forgotPassInput.controls;
   }

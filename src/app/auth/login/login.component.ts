@@ -61,7 +61,7 @@ togglePasswordTextType() {
           console.log(res);
           this.userservice.setRole();
           this.toastrService.success(res.message);
-          this.router.navigate(['']);
+          this.router.navigate(['/main/dashboard']);
         }
         else{
           alert(res.err);

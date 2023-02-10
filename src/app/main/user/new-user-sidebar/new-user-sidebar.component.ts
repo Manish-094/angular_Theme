@@ -3,14 +3,12 @@ import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.s
 
 @Component({
   selector: 'app-new-user-sidebar',
-  templateUrl: './new-user-sidebar.component.html',
-  styleUrls: ['./new-user-sidebar.component.scss']
+  templateUrl: './new-user-sidebar.component.html'
 })
 export class NewUserSidebarComponent implements OnInit {
-
-  public fullname: any;
-  public username: any;
-  public email: any;
+  public fullname;
+  public username;
+  public email;
 
   /**
    * Constructor
@@ -24,7 +22,7 @@ export class NewUserSidebarComponent implements OnInit {
    *
    * @param name
    */
-  toggleSidebar(name: string): void {
+  toggleSidebar(name): void {
     this._coreSidebarService.getSidebarRegistry(name).toggleOpen();
   }
 
@@ -33,12 +31,11 @@ export class NewUserSidebarComponent implements OnInit {
    *
    * @param form
    */
-  submit(form: { valid: any; }) {
+  submit(form) {
     if (form.valid) {
       this.toggleSidebar('new-user-sidebar');
     }
   }
 
   ngOnInit(): void {}
-
 }

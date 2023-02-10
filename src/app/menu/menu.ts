@@ -64,12 +64,12 @@ export const menu: CoreMenu[] = [
         url: '/user/user-list'
       },
       {
-        id: 'view',
-        title: 'View',
+        id: 'slider',
+        title: 'Slider',
         translate: 'MENU.APPS.USER.VIEW',
         type: 'item',
         icon: 'circle',
-        url: 'apps/user/user-view'
+        url: '/main/slider'
       },
       {
         id: 'edit',
@@ -77,7 +77,7 @@ export const menu: CoreMenu[] = [
         translate: 'MENU.APPS.USER.EDIT',
         type: 'item',
         icon: 'circle',
-        url: 'app/user/user-edit'
+        url: '/main/user-edit'
       }
     ]
   }

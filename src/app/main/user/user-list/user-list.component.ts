@@ -27,6 +27,8 @@ export class UserListComponent implements OnInit {
   public previousPlanFilter = '';
   public previousStatusFilter = '';
   public rowsCount;
+  public role_value;
+  public status_value;
 
   public selectRole: any = [
     { name: 'All', value: '' },
@@ -83,7 +85,7 @@ export class UserListComponent implements OnInit {
 getUserListData(params){
   this._userListService.getDataTableRows(params).subscribe((res)=>{
     if(res.status == 1){
-      this._toastr.success(res.message)
+      // this._toastr.success(res.message)
       this.rows = res.data.data;
       this.rowsCount = res.data.total;
       console.log(this.rowsCount,1000);
@@ -92,6 +94,7 @@ getUserListData(params){
     }
     this.setRole(this.rows);
     this.setStatus(this.rows);
+    // this.filterData(this.rows);
 
   })
 }
@@ -105,6 +108,10 @@ const params = new HttpParams()
 this.getUserListData(params)
   
 }
+
+/**
+ * common filter by role and status function 
+ */
 
 
 
@@ -148,8 +155,10 @@ Totaldata() {
    * @param event
    */
   filterUpdate(event) {
-    const params = new HttpParams()
-    .set('search', this.searchValue)
+    const  params = new HttpParams()
+    .set('user_type',this.role_value)
+    .set('status',this.status_value)
+    .set('search',this.searchValue)
     this.getUserListData(params)
   }
 
@@ -168,8 +177,21 @@ Totaldata() {
    * @param event
    */
     filterByRole(event: { value: any; }) {
-       const params = new HttpParams().set('user_type',event.value)
-       this.getUserListData(params)
+   
+       if(event.value == 1 || event.value == 2 || event.value == undefined){
+        console.log("hello");
+        
+        const params = new HttpParams().set('user_type',event.value)
+        this.getUserListData(params)
+        this.role_value = event.value;
+        console.log(event.value);
+        
+       }
+       else{
+        console.log("hey");
+        
+        this.ngOnInit();
+       }
     }
 
     /**
@@ -188,7 +210,9 @@ Totaldata() {
    */
     filterByStatus(event: { value: any; }) {
       const params = new HttpParams().set('status',event.value)
+      .set('user_type',this.role_value)
        this.getUserListData(params)
+       this.status_value = event.value;
     }
 
       /**

@@ -67,7 +67,7 @@ export class RegistrationComponent implements OnInit {
   UsersignUp(data: Person){
 
     this.isFormValid = true;
-    console.log(this.contactForm.valid,53);
+    // console.log(this.contactForm.valid,53);
     
     if(this.contactForm.valid){
       this.userservice.sendData(data).subscribe((res)=>{

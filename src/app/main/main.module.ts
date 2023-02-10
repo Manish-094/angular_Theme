@@ -18,10 +18,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { UserEditComponent } from './user/user-edit/user-edit.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { NewUserSidebarComponent } from './user/new-user-sidebar/new-user-sidebar.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CorePipesModule } from '@core/pipes/pipes.module';
 import { CoreDirectivesModule } from '@core/directives/directives';
+import { NewUserSidebarComponent } from './user/new-user-sidebar/new-user-sidebar.component';
+import { SliderComponent } from './slider/slider.component';
 
 
 
@@ -33,6 +34,7 @@ import { CoreDirectivesModule } from '@core/directives/directives';
       UserListComponent,
       UserEditComponent,
       NewUserSidebarComponent,
+      SliderComponent,
       // CoreCardSnippetComponent
     ],
     providers: [
@@ -63,6 +65,7 @@ import { CoreDirectivesModule } from '@core/directives/directives';
         Ng2FlatpickrModule,
         CorePipesModule,
         CoreDirectivesModule,
+        ReactiveFormsModule
     ]
 })
 export class MainModule { }

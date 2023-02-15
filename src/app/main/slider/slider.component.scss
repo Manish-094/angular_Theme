@@ -1,2 +1,24 @@
 label{
     font-size:1.1rem;}
+  @import '@core/scss/angular/libs/datatables.component.scss';
+@import '@core/scss/base/pages/app-user.scss';
+@import '@core/scss/angular/libs/select.component.scss';
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 5rem !important;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.2);
+  }
+  .show {
+    display: block;
+  }
+  .cancel{
+    position: absolute;
+    bottom: 1.5rem;
+    left: 8rem;
+  }

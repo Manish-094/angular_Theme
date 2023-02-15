@@ -23,6 +23,7 @@ import { CorePipesModule } from '@core/pipes/pipes.module';
 import { CoreDirectivesModule } from '@core/directives/directives';
 import { NewUserSidebarComponent } from './user/new-user-sidebar/new-user-sidebar.component';
 import { SliderComponent } from './slider/slider.component';
+import { BlockUIModule } from 'ng-block-ui';
 
 
 
@@ -35,6 +36,7 @@ import { SliderComponent } from './slider/slider.component';
       UserEditComponent,
       NewUserSidebarComponent,
       SliderComponent,
+     
       // CoreCardSnippetComponent
     ],
     providers: [
@@ -65,7 +67,8 @@ import { SliderComponent } from './slider/slider.component';
         Ng2FlatpickrModule,
         CorePipesModule,
         CoreDirectivesModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        BlockUIModule
     ]
 })
 export class MainModule { }

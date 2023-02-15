@@ -177,22 +177,16 @@ Totaldata() {
    * @param event
    */
     filterByRole(event: { value: any; }) {
-   
-       if(event.value == 1 || event.value == 2 || event.value == undefined){
-        console.log("hello");
+
         
         const params = new HttpParams().set('user_type',event.value)
         this.getUserListData(params)
         this.role_value = event.value;
-        console.log(event.value);
+        // console.log(event.value);
         
        }
-       else{
-        console.log("hey");
-        
-        this.ngOnInit();
-       }
-    }
+
+    
 
     /**
    * Filter By Plan

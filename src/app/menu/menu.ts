@@ -73,11 +73,11 @@ export const menu: CoreMenu[] = [
       },
       {
         id: 'edit',
-        title: 'Edit',
+        title: 'edit',
         translate: 'MENU.APPS.USER.EDIT',
         type: 'item',
         icon: 'circle',
-        url: '/main/user-edit'
+        url: ''
       }
     ]
   }

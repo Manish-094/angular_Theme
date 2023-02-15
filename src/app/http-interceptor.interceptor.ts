@@ -13,10 +13,13 @@ export class HttpInterceptorInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    request = request.clone({ headers: request.headers.set('Content-Type', 'application/json') });
     const tokan=localStorage.getItem('token')
+    
     if(tokan!==null && tokan!== undefined){
      request = request.clone({ headers: request.headers.set('Authorization', 'Bearer ' + tokan) });
+    }
+    if(Headers === null || Headers === undefined){
+      request = request.clone({ headers: request.headers.set('Content-Type', 'application/json') });
     }
     return next.handle(request);
   }

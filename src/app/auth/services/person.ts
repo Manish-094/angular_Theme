@@ -11,4 +11,6 @@ export class Person{
 export class sliderData{
     slider_image:string
     title:string
+    id:string
+    status:string
 }

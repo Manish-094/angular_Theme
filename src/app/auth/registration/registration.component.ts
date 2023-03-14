@@ -52,22 +52,24 @@ export class RegistrationComponent implements OnInit {
     this.contactForm = this.fb.group({
       first_name:['',[Validators.required]],
       last_name:['',[Validators.required]],
-      company:['',[Validators.required]],
-      email:['',[Validators.required,Validators.email]],
+      company_email:['',[Validators.required,Validators.email]],
+      personal_email:['',[Validators.required,Validators.email]],
       password:['',[Validators.required,Validators.minLength(8)],createPasswordStrengthValidator],
-      cnfpassword:['',Validators.required]
+      confirm_password:['',Validators.required],
+      department:['1',Validators.required],
+      user_type:['1',Validators.required],
     },
     {
-      validators: MustMatch('password','cnfpassword') 
+      validators: MustMatch('password','confirm_password') 
     }
     )
   }
 
 
-  UsersignUp(data: Person){
+  UsersignUp(data){
 
     this.isFormValid = true;
-    // console.log(this.contactForm.valid,53);
+    console.log(this.contactForm.value,53);
     
     if(this.contactForm.valid){
       this.userservice.sendData(data).subscribe((res)=>{

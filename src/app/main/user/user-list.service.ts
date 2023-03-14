@@ -2,13 +2,18 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { apiUrl } from 'app/api/constant';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserListService implements Resolve<any> {
+  @BlockUI() blockUI:NgBlockUI;
+
   public rows : any;
   public onUserListChanged : BehaviorSubject<any>;
 
@@ -17,7 +22,7 @@ export class UserListService implements Resolve<any> {
   * @param _httpClient 
   */
 
-  constructor(private _httpClient: HttpClient ) {
+  constructor(private _httpClient: HttpClient,private __toastr:ToastrService ) {
       this.onUserListChanged = new BehaviorSubject({});
    }
 
@@ -29,11 +34,7 @@ export class UserListService implements Resolve<any> {
    */
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):Observable<any> | Promise<any> | any {
-    // return new Promise<void>((resolve, reject) => {
-    //   Promise.all([this.getDataTableRows()]).then(() => {
-    //     resolve();
-    //   }, reject);
-    // }); 
+    
   }
 
 /**
@@ -43,19 +44,25 @@ export class UserListService implements Resolve<any> {
 
 
 
-private userListUrl = apiUrl+"/users/users-list";
+private userListUrl = apiUrl+"/user/list";
 
      getDataTableRows(params): Observable<any> {
-      return this._httpClient.get(this.userListUrl,{params});
-  //   return new Promise((resolve, reject) => {
-  //     this._httpClient.get(this.userListUrl).subscribe((response: any) => {
-  //       this.rows = response;
-  //     //  console.log(this.rows);
-        
-  //       this.onUserListChanged.next(this.rows);
-  //       resolve(this.rows);
-  //     }, reject);
-  //   });
-  // }
+    this.blockUI.start('Loading...');
+      return this._httpClient.get(this.userListUrl,{params}).pipe(map((data)=>{
+        this.blockUI.stop();
+        return data;
+      }),catchError((error) => {
+        this.blockUI.stop();
+        console.log(error);
+        this.commonErrorHandler(error.status, error.error.message);
+        throw error;
+      }));
+}
+
+
+public commonErrorHandler(errorStatus, errorMessage) {
+  if (errorStatus !== null || errorStatus !== undefined) {
+    this.__toastr.error(errorMessage);
+  }
 }
 }

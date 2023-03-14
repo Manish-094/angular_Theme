@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { apiUrl } from 'app/api/constant';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -9,6 +10,7 @@ import { catchError, map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class SliderService implements OnInit {
+  @BlockUI() blockUI:NgBlockUI;
 
   constructor(private _httpService:HttpClient,private _toastr:ToastrService) { }
   ngOnInit(){
@@ -21,17 +23,29 @@ export class SliderService implements OnInit {
 
   private sliderUrl = apiUrl+"/slider/add-slider";
   sliderData(formData:any):Observable<any>{
+    this.blockUI.start('Loading...');
     return this._httpService.post(this.sliderUrl,formData
     ).pipe(map((res:any)=>{
+      this.blockUI.stop();
       return res;
-    })).pipe(catchError(this.handleError));;
+    }),catchError((error) => {
+      console.log(error);
+      this.commonErrorHandler(error.status, error.error.message);
+      throw error;
+    }))
   }
 
   private getsliderUrl = apiUrl+"/slider/get-slider/";
   getSlider(id:any):Observable<any>{
+    this.blockUI.start('Loading...');
     return this._httpService.get(this.getsliderUrl+id).pipe(map((data)=>{
+      this.blockUI.stop();
       return data;
-    })).pipe(catchError(this.handleError));
+    }),catchError((error) => {
+      console.log(error);
+      this.commonErrorHandler(error.status, error.error.message);
+      throw error;
+    }))
   }
   /**
    * get all Slider
@@ -39,18 +53,32 @@ export class SliderService implements OnInit {
 
   private allSliderUrl = apiUrl+"/slider/get-slider";
   getAllSlider(data:any):Observable<any>{
+    this.blockUI.start('Loading...');
     return this._httpService.get(this.allSliderUrl).pipe(map((data)=>{
+      this.blockUI.stop();
       return data;
-    })).pipe(catchError(this.handleError));;
+    }),catchError((error) => {
+      this.blockUI.stop();
+      console.log(error);
+      this.commonErrorHandler(error.status, error.error.message);
+      throw error;
+    }))
   }
 
   /**delete Slider */
 
   private deleteSlideUrl = apiUrl+"/slider/delete-slider/";  // delete api url
   deleteData(id: string) {
+    this.blockUI.start('Loading...');
     return this._httpService.delete(this.deleteSlideUrl+id).pipe(map((res:any)=>{
+      this.blockUI.stop();
       return res;
-    })).pipe(catchError(this.handleError));
+    }),catchError((error) => {
+      this.blockUI.stop();
+      console.log(error);
+      this.commonErrorHandler(error.status, error.error.message);
+      throw error;
+    }))
   }
 
   /**
@@ -59,32 +87,25 @@ export class SliderService implements OnInit {
 
   private editSlidrUrl = apiUrl+"/slider/edit-slider/";   // edit-slider url
   editSlider(id:string,data:any):Observable<any>{
+    this.blockUI.start('Loading...');
     return this._httpService.put(this.editSlidrUrl+id,data).pipe(map((res)=>{
+      this.blockUI.stop();
       return res;
-    })).pipe(catchError(this.handleError));
+    }),catchError((error) => {
+      this.blockUI.stop();
+      console.log(error);
+      this.commonErrorHandler(error.status, error.error.message);
+      throw error;
+    }))
 
   }
 
 
-
-  private handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      // console.error('An error occurred:', error.error.message);
-      this._toastr.error(error.error.message)
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong.
-      this._toastr.error( `Backend returned code ${error.status}, ` +
-      `body was: ${error.error}`)
-      // console.error(
-      //   `Backend returned code ${error.status}, ` +
-      //   `body was: ${error.error}`);
+  public commonErrorHandler(errorStatus, errorMessage) {
+    if (errorStatus !== null || errorStatus !== undefined) {
+      this._toastr.error(errorMessage);
     }
-    // Return an observable with a user-facing error message.
-    return throwError(
-      'Something bad happened; please try again later.');
-  };
+  }
 }
 
 

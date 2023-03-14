@@ -1,0 +1,16 @@
+@import '@core/scss/angular/libs/datatables.component.scss';
+@import '@core/scss/base/pages/app-user.scss';
+@import '@core/scss/angular/libs/select.component.scss';
+input.ng-invalid.ng-touched{
+    border: 1px solid red;
+ }
+small{
+    color: red;
+    font-size: 1rem;
+}
+
+
+textarea.ng-invalid.ng-touched{
+    border: 1px solid red;
+ }
+  

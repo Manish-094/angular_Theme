@@ -55,9 +55,30 @@ export const menu: CoreMenu[] = [
     type: 'collapsible',
     icon: 'user',
     children: [
+      
+
+      {
+        id: 'admin',
+        title: 'Admin',
+        translate: 'MENU.APPS.USER.COLLAPSIBLE',
+        type: 'collapsible',
+        icon: 'user',
+        children: [
+          
+          {
+            id: 'list',
+            title: 'AdminList',
+            translate: 'MENU.APPS.USER.LIST',
+            type: 'item',
+            icon: 'circle',
+            url: '/main/adminlist'
+          },
+        ]
+      },
+
       {
         id: 'list',
-        title: 'List',
+        title: 'UserList',
         translate: 'MENU.APPS.USER.LIST',
         type: 'item',
         icon: 'circle',
@@ -72,13 +93,31 @@ export const menu: CoreMenu[] = [
         url: '/main/slider'
       },
       {
-        id: 'edit',
-        title: 'edit',
-        translate: 'MENU.APPS.USER.EDIT',
-        type: 'item',
-        icon: 'circle',
-        url: ''
-      }
+        id: 'feedback',
+        title: 'Feedback',
+        translate: 'MENU.APPS.USER.COLLAPSIBLE',
+        type: 'collapsible',
+        icon: 'book',
+        children: [
+          
+          {
+            id: 'list',
+            title: 'Query',
+            translate: 'MENU.APPS.USER.LIST',
+            type: 'item',
+            icon: 'circle',
+            url: '/feed/query'
+          },
+          {
+            id: 'list',
+            title: 'List',
+            translate: 'MENU.APPS.USER.LIST',
+            type: 'item',
+            icon: 'circle',
+            url: '/feed/list'
+          },
+        ]
+      },
     ]
   }
 ]

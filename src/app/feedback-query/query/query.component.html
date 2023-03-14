@@ -1,0 +1,80 @@
+<!-- <div class="container">
+    <div class="row justify-content-center">
+         <div class="col-md-8 card">
+            <div class="card-header"><h3>Write Query</h3></div>
+            <div class="card-body">
+                <form [formGroup]="queryForm" (ngSubmit)="onSubmit(queryForm.value)">
+                    <div class="form-group p-2">
+                        <label for="title">Title</label>
+                        <input type="text" name="title" placeholder="Title" class="form-control" formControlName="feedback_title">
+                        <ng-container *ngIf="isFormValid || (!f?.feedback_title?.valid && (f?.feedback_title?.dirty || f?.feedback_title?.touched))">
+                            <small class="form-text" [hidden]="!f?.feedback_title?.errors?.['required']">feedback_title is required *</small>
+                        </ng-container>
+                    </div>
+                    <div class="form-group p-2">
+                        <label for="description">Description</label>
+                            <textarea placeholder="description" class="form-control" formControlName="feedback_description"></textarea>
+                            <ng-container *ngIf="isFormValid || (!f?.feedback_description?.valid && (f?.feedback_description?.dirty || f?.feedback_description?.touched))">
+                                <small class="form-text" [hidden]="!f?.feedback_description?.errors?.['required']">feedback_description is required *</small>
+                            </ng-container>
+                    </div>
+                    <div class="form-group p-2">
+                        <button type="submit" class="btn btn-primary px-4">Submit</button>
+                        <button type="button" (click)="reset()" class="btn btn-danger px-4 mx-4">Reset</button>
+                    </div>
+                </form>
+            </div>
+         </div>
+    </div>
+</div> 
+
+
+ -->
+
+
+
+ 
+  <!-- Button trigger modal -->
+  <button type="button" (click)="modalOpen(modalBasic)" class="btn btn-primary" rippleEffect>
+    Add New Query
+  </button>
+
+  <!-- Modal -->
+  <ng-template #modalBasic let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="myModalLabel1">Ask Your Query</h4>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+   
+                <form [formGroup]="queryForm" (ngSubmit)="onSubmit(queryForm.value)"novalidate>
+                    <div class="form-group p-2">
+                        <label for="title">Title</label>
+                        <input type="text" name="title" placeholder="Title" class="form-control" formControlName="feedback_title">
+                        <ng-container *ngIf="isFormValid || (!f?.feedback_title?.valid && (f?.feedback_title?.dirty || f?.feedback_title?.touched))">
+                            <small class="form-text" [hidden]="!f?.feedback_title?.errors?.['required']">feedback_title is required *</small>
+                        </ng-container>
+                    </div>
+                    <div class="form-group p-2">
+                        <label for="description">Description</label>
+                            <textarea placeholder="description" class="form-control" formControlName="feedback_description"></textarea>
+                            <ng-container *ngIf="isFormValid || (!f?.feedback_description?.valid && (f?.feedback_description?.dirty || f?.feedback_description?.touched))">
+                                <small class="form-text" [hidden]="!f?.feedback_description?.errors?.['required']">feedback_description is required *</small>
+                            </ng-container>
+                    </div>
+                    <div class="form-group p-2">
+                        <button  type="submit" class="btn btn-primary px-4" >Submit</button>
+                        <button type="button" (click)="reset()" class="btn btn-danger px-4 mx-4">Reset</button>
+                    </div>
+                </form>
+            </div>
+    
+    <!-- <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="modal.close('Accept click')" rippleEffect>
+        Accept
+      </button>
+    </div> -->
+  </ng-template>
+  <!-- / Modal -->

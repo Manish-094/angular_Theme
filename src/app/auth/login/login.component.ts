@@ -44,10 +44,10 @@ togglePasswordTextType() {
   ngOnInit(): void {
   //  this.userservice.reloadUser();
     this.LoginForm = this.fb.group({
-      email:['', [Validators.required,Validators.email]],
+      company_email:['', [Validators.required,Validators.email]],
       password:['', Validators.required],
-      user_type:['',Validators.required],
-      platform_os:['1',Validators.required]
+      // user_type:['',Validators.required],
+      // platform_os:['1',Validators.required]
     })
   }
   userLogin(data){
@@ -56,15 +56,12 @@ togglePasswordTextType() {
     if(this.LoginForm.valid){
       this.userservice.sendLoginData(data).subscribe((res)=>{
         if(res.status==1){
-          localStorage.setItem('token',res.data.auth_toekn);
+          localStorage.setItem('token',res.data.token);
           localStorage.setItem('currentUser',JSON.stringify(res.data));
           console.log(res);
           this.userservice.setRole();
           this.toastrService.success(res.message);
-          this.router.navigate(['/main/dashboard']);
-        }
-        else{
-          alert(res.err);
+          this.router.navigate(['/user/user-list']);
         }
       })
     }

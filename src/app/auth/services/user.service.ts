@@ -66,8 +66,11 @@ ngOnInit(): void {
   /**
    * urls
    */
-  private registrationUrl = apiUrl+"/users/signUp"; //url for signUp api
-  private loginUrl = apiUrl+"/users/login";         //url for login api
+  // private registrationUrl = apiUrl+"/users/signUp"; //url for signUp api
+  private registrationUrl = apiUrl+"/user/create"; //url for signUp api
+
+  // private loginUrl = apiUrl+"/users/login";         //url for login api
+  private loginUrl = apiUrl+"/user/login";         //url for login api
   private passwordResetUrl = apiUrl+"/users/forgot-password"; //url for resetPassword
   private userProfile = apiUrl+"/users/profile";             // user Profile 
 
@@ -131,10 +134,10 @@ ngOnInit(): void {
 
  setRole(){
   const curr_uer = JSON.parse( localStorage.getItem('currentUser'));
-  if(curr_uer.user_type == 2){
+  if(curr_uer.user.user_type == 2){
      curr_uer.role = "User";
   }
-  else if(curr_uer.user_type == 1){
+  else if(curr_uer.user.user_type == 1){
     curr_uer.role = "Admin";
   }
 

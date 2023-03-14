@@ -16,14 +16,14 @@ import { CommonModule } from '@angular/common';
 import { MainRoutingModule } from './main-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserListComponent } from './user/user-list/user-list.component';
-import { UserEditComponent } from './user/user-edit/user-edit.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CorePipesModule } from '@core/pipes/pipes.module';
 import { CoreDirectivesModule } from '@core/directives/directives';
-import { NewUserSidebarComponent } from './user/new-user-sidebar/new-user-sidebar.component';
 import { SliderComponent } from './slider/slider.component';
 import { BlockUIModule } from 'ng-block-ui';
+import { AdminComponent } from './admin/admin.component';
+import { AdminSidebarComponent } from './admin-sidebar/admin-sidebar.component';
 
 
 
@@ -33,9 +33,9 @@ import { BlockUIModule } from 'ng-block-ui';
     declarations: [
       DashboardComponent,
       UserListComponent,
-      UserEditComponent,
-      NewUserSidebarComponent,
       SliderComponent,
+      AdminComponent,
+      AdminSidebarComponent,
      
       // CoreCardSnippetComponent
     ],

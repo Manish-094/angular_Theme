@@ -22,7 +22,7 @@
                   </fieldset>
                 </div>
 
-                <div class="col-12 col-md-4">
+                <!-- <div class="col-12 col-md-4">
                   <fieldset class="form-group">
                     <ng-select
                       [items]="selectStatus"
@@ -31,6 +31,19 @@
                       bindLabel="name"
                       placeholder="Select Status"
                       (change)="filterByStatus($event)"
+                    ></ng-select>
+                  </fieldset>
+                </div> -->
+
+                <div class="col-12 col-md-4">
+                  <fieldset class="form-group">
+                    <ng-select
+                      [items]="selectDepartment"
+                      [(ngModel)]="selectedDepartment"
+                      name="selectedDepartment"
+                      bindLabel="name"
+                      placeholder="Select Department"
+                      (change)="filterByDepartment($event)"
                     ></ng-select>
                   </fieldset>
                 </div>
@@ -79,8 +92,7 @@
                   name="searchValue"
                   type="search"
                   class="form-control ml-25"
-                  (keyup)="filterUpdate($event)"
-                  (search)="filterUpdate($event)"
+                   #myInput
               /></label>
               <button class="btn btn-primary ml-1" rippleEffect (click)="toggleSidebar('new-user-sidebar')">
                 <i data-feather="plus" class="d-sm-none d-inline-block mr-0 mr-sm-1"></i
@@ -136,7 +148,11 @@
               </div>
             </ng-template>
           </ngx-datatable-column> -->
-          <ngx-datatable-column name="Email" prop="email" [width]="200"></ngx-datatable-column>
+          <ngx-datatable-column name="Company Email" prop="company_email" [width]="200"></ngx-datatable-column>
+          <!-- <ngx-datatable-column name="Name" prop="first_name" [width]="200"></ngx-datatable-column> -->
+          <!-- <ngx-datatable-column name="Department" prop="department" [width]="200"></ngx-datatable-column> -->
+
+
           <ngx-datatable-column name="Role" prop="role" [width]="100">
             <ng-template let-role="value" ngx-datatable-cell-template>
               <div>
@@ -144,16 +160,54 @@
                   class="feather font-medium-3"
                   [ngClass]="{
             
-                    'icon-user text-primary': role == 'User',
-                    'icon-slack text-danger': role == 'Admin'
+                    'icon-slack text-primary': role == 'ADMIN',
+                    'icon-slack text-danger': role == 'DELIVERY_MANAGER',
+                    'icon-slack text-danger': role == 'ACCOUNTS',
+                    'icon-slack text-danger': role == 'HR',
+                    'icon-slack text-danger': role == 'PM',
+                    'icon-slack text-danger': role == 'TL',
+                    'icon-slack text-danger': role == 'USER'
                   }"
                 ></i>
-                {{ role }}
+                <!-- {{ role == 1?"ADMIN":role == 2?"DELIVERY_MANAGER":role == 3?"ACCOUNTS":role ==4?"HR" 
+                :role ==5?"PM":role ==6?"TL":role ==7?"USER":"others"}} -->
+                {{role}}
               </div>
             </ng-template>
           </ngx-datatable-column>
+
+
+          <ngx-datatable-column name="Department" prop="department" [width]="100">
+            <ng-template let-department="value" ngx-datatable-cell-template>
+              <div>
+                <i
+                  class="feather font-medium-3"
+                  [ngClass]="{
+            
+                    'icon-slack text-primary': department == 'ADMIN',
+                    'icon-slack text-danger': department == 'HR',
+                    'icon-slack text-danger': department == 'ACCOUNT',
+                    'icon-slack text-danger': department == 'MOBILE_DEVELOPMENT',
+                    'icon-slack text-danger': department == 'FULLSTACK_DEVELOPMENT',
+                    'icon-slack text-danger': department == 'PHP_DEVELOPMENT',
+                    'icon-slack text-danger': department == 'ECOMMERCE_DEVELOPMENT',
+                    'icon-slack text-danger': department == 'DOTNET_DEVELOPMENT',
+                    'icon-slack text-danger': department == 'LIFERAY_DEVELOPMENT',
+                    'icon-slack text-danger': department == 'DESIGN',
+                    'icon-slack text-danger': department == 'QA',
+                    'icon-slack text-danger': department == 'NETWORK',
+                    'icon-slack text-danger': department == 'SALES'
+                  }"
+                ></i>
+                <!-- {{ role == 1?"ADMIN":role == 2?"DELIVERY_MANAGER":role == 3?"ACCOUNTS":role ==4?"HR" 
+                :role ==5?"PM":role ==6?"TL":role ==7?"USER":"others"}} -->
+                {{department}}
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+
           <!-- <ngx-datatable-column name="Plan" prop="currentPlan" [width]="100"></ngx-datatable-column> -->
-          <ngx-datatable-column name="Status" prop="status" [width]="50">
+          <!-- <ngx-datatable-column name="Status" prop="status" [width]="50">
             <ng-template let-status="value" ngx-datatable-cell-template>
               <div
                 class="badge badge-pill"
@@ -166,7 +220,7 @@
                 {{ status }}
               </div>
             </ng-template>
-          </ngx-datatable-column>
+          </ngx-datatable-column> -->
           <ngx-datatable-column name="Actions" [width]="40" [sortable]="false">
             <ng-template ngx-datatable-cell-template let-row="row">
               <div ngbDropdown container="body">

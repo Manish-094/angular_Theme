@@ -1,11 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { EventEmitter, Injectable, OnInit } from '@angular/core';
+import {  Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { apiUrl } from 'app/api/constant';
+import { loginUrl, passwordResetUrl, registrationUrl } from 'app/api/constant';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {  Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { User } from '../helpers';
 import { ForgotPasswordModel } from '../models';
 import { Person } from './person';
 
@@ -22,57 +21,11 @@ export class UserService implements OnInit {
 ngOnInit(): void {
   
 }
-  // isLoginError = new EventEmitter<boolean>(false);
-  // isUserLogedIn = new BehaviorSubject<boolean>(false);
-    // islogged:boolean = false;
-  // user:any;
-  // constructor(private http:HttpClient,private router:Router) { }
-
-  // UserSignUp(user:any){
-  //   this.http.post("http://137.184.19.129:4001/v1/users/signUp",user,{observe:'response'}).subscribe((result)=>{
-  //     if(result){
-  //       // this.isUserLogedIn.next(true);
-  //       localStorage.setItem('user',JSON.stringify(result.body));
-  //       this.router.navigate(['/userAuth/login'])
-  //     }
-  //   })
-  // }
-
-  // UserLogin(data:any){
-  //   this.http.get<any>(`http://localhost:3000/User?email=${data.emailId}&password=${data.password}`,{observe:'response'}).subscribe((result)=>{
-  //     if(result && result.body && result.body.length){
-  //       this.isLoginError.emit(false);
-  //       localStorage.setItem('user', JSON.stringify(result.body[0]))
-  //       // this.isUserLogedIn.next(true);
-  //       localStorage.setItem('token','true');
-  //       this.islogged = true;
-  //       this.router.navigate([''])
-  //     }
-  //     else{
-  //       this.isLoginError.emit(true);
-  //     }
-  //   })
-  // }
-  // // reloadUser(){
-  //   if(localStorage.getItem('user')){
-  //     // this.isUserLogedIn.next(true);
-  //     this.islogged = true;
-  //     this.router.navigate(['/main/dashboard'])
-  //   }
-  // }
+  
 
   constructor(private http:HttpClient,private router:Router,private toastr:ToastrService){}
 
-  /**
-   * urls
-   */
-  // private registrationUrl = apiUrl+"/users/signUp"; //url for signUp api
-  private registrationUrl = apiUrl+"/user/create"; //url for signUp api
 
-  // private loginUrl = apiUrl+"/users/login";         //url for login api
-  private loginUrl = apiUrl+"/user/login";         //url for login api
-  private passwordResetUrl = apiUrl+"/users/forgot-password"; //url for resetPassword
-  private userProfile = apiUrl+"/users/profile";             // user Profile 
 
   
   /**
@@ -83,7 +36,7 @@ ngOnInit(): void {
    */
 
   sendData(person:Person):Observable<any>{
-    return this.http.post(this.registrationUrl,person).pipe(
+    return this.http.post(registrationUrl,person).pipe(
       map((data)=>{
         console.log("data send");
         return data;
@@ -103,7 +56,7 @@ ngOnInit(): void {
    */
 
   sendLoginData(person:Person):Observable<any>{
-    return this.http.post(this.loginUrl,person).pipe(
+    return this.http.post(loginUrl,person).pipe(
       map((data)=>{
         this.isLoggedIn = true;
         return data;
@@ -121,7 +74,7 @@ ngOnInit(): void {
    * Reset password
    */
  ResetPassword(data:ForgotPasswordModel):Observable<any>{
-    return this.http.post(this.passwordResetUrl,data).pipe(
+    return this.http.post(passwordResetUrl,data).pipe(
       map((data)=>{
         console.log(" reset data send");
         return data;

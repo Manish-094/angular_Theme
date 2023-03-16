@@ -12,7 +12,7 @@ const routes: Routes = [
   // {path:'dashboard',component:VerticalLayoutComponent,canActivate:[AuthGuard]},
   {path:'user',loadChildren:()=>import("./main/main.module").then(mod=>mod.MainModule)},
   {path:'main',loadChildren:()=>import("./main/main.module").then(mod=>mod.MainModule),canActivate:[AuthGuard]},
-  {path:'feed',loadChildren:()=>import("./feedback-query/feedback-query.module").then(mod=>mod.FeedbackQueryModule)},
+  {path:'feed',loadChildren:()=>import("./main/feedback-query/feedback-query.module").then(mod=>mod.FeedbackQueryModule)},
   
   
   {path:'',redirectTo:'auth/login',pathMatch:'full'},

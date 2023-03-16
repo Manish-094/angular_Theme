@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CoreConfigService } from '@core/services/config.service';
 import { ToastrService } from 'ngx-toastr';
+import { AuthenticationService } from '../services';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -23,7 +24,7 @@ togglePasswordTextType() {
   this.passwordTextType = !this.passwordTextType;
 }
 
-  constructor(private fb:FormBuilder,private userservice:UserService,private router:Router,private toastrService:ToastrService,private _coreConfigService:CoreConfigService) { 
+  constructor(private fb:FormBuilder,private userservice:UserService,private router:Router,private toastrService:ToastrService,private _coreConfigService:CoreConfigService,private _authService:AuthenticationService) { 
     this._coreConfigService.config = {
       layout: {
         navbar: {
@@ -61,7 +62,8 @@ togglePasswordTextType() {
           console.log(res);
           this.userservice.setRole();
           this.toastrService.success(res.message);
-          this.router.navigate(['/user/user-list']);
+          this._authService.currentUserSubject.next(res.data)
+          this.router.navigate(['main/dashboard']);
         }
       })
     }

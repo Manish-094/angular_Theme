@@ -1,0 +1,140 @@
+
+
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+      <!-- User List -->
+      <section class="users-list-wrapper">
+        <!-- users filter start -->
+    
+        <!-- users filter end -->
+  
+        <div class="card">
+          <div class="row">
+            <div class="col-md-6 col-12 py-3">
+              <div class="d-flex justify-content-between align-items-center m-1">
+                <label class="d-flex align-items-center pl-3"
+                  >Show
+                  <select class="form-control mx-25" (change)="Totaldata()">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                  entries</label
+                >
+              </div>
+            </div>
+            <div class="col-md-6 col-12 d-flex justify-content-start justify-content-md-end">
+              <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pb-md-0">
+                <label class="d-flex align-items-center ml-1 ml-md-0 pr-3"
+                  >Search:<input
+                    [(ngModel)]="searchValue"
+                    name="searchValue"
+                    type="search"
+                    class="form-control ml-25"
+                    #myInput
+                /></label>
+            
+              </div>
+            </div>
+          </div>
+          <ngx-datatable
+            [rows]="rows"
+            [rowHeight]="50"
+            class="bootstrap core-bootstrap"
+            [limit]="selectedOption"
+            [columnMode]="ColumnMode.force"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [scrollbarH]="true"
+            [count]="rowsCount"
+            [externalPaging]="true"
+            (page)="page($event)"
+            #tableRowDetails
+            
+          >
+
+          <!-- for description -->
+        <ngx-datatable-row-detail [rowHeight]="50" >
+          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+            <div class="ml-75 pl-5 pt-75">
+              <div>
+                <strong>DESCRIPTION:</strong>
+                {{row.feedback_description}}
+              </div>
+            </div>
+          </ng-template>
+        </ngx-datatable-row-detail>
+        <ngx-datatable-column [width]="50" [resizeable]="false" [sortable]="false" [draggable]="false"
+          [canAutoResize]="false">
+          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+            <a href="javascript:void(0)" [class.datatable-icon-right]="!expanded" [class.datatable-icon-down]="expanded"
+              title="Expand/Collapse Row" (click)="rowDetailsToggleExpand(row)">
+            </a>
+          </ng-template>
+        </ngx-datatable-column>
+        
+            <ngx-datatable-column name="Feedback title" prop="feedback_title" [width]="200"></ngx-datatable-column>
+      
+            <!-- <ngx-datatable-column name="description" prop="feedback_description" [width]="200"></ngx-datatable-column> -->
+
+          
+             
+            <ngx-datatable-column name="Assigned_To" prop="assigned_to" [width]="200">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div *ngFor="let person of row.assigned_to">
+                  
+                    {{person.first_name}}
+                  </div>
+            </ng-template>
+            </ngx-datatable-column>
+          
+            
+  
+           
+            <ngx-datatable-column name="feedback_status" prop="status" [width]="100">
+                <ng-template let-status="value" ngx-datatable-cell-template>
+                  <div class="badge badge-pill"
+                      [ngClass]="{
+                
+                        'badge-light-success': status ==  'open',
+                        'badge-light-secondary': status == 'in_process',
+                        'badge-light-secondary': status == 'closed',
+                        'badge-light-warning': status == 'confirmed'
+                      }"
+                  >
+                  
+                    {{status}}
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+
+        
+              <ngx-datatable-column name="Actions" [width]="40" [sortable]="false">
+                <ng-template ngx-datatable-cell-template let-row="row">
+                  
+                  
+                    <div container="body" >
+                      <!-- <a routerLink="/apps/user/user-view/{{ row.id }}" 
+                        ><span [data-feather]="'file-text'" [size]="16" [class]="'mr-50'"></span> Details</a
+                      > -->
+                      <a  (click)="modalOpen(modalBasic,row.status,row._id)" 
+                        ><span [data-feather]="'edit'" [size]="16" [class]="'mr-50'" class="text-primary"></span></a
+                      ><a (click)="deleteData(row._id)" 
+                        ><span [data-feather]="'trash'" [size]="16" [class]="'mr-50'" class="text-danger"></span></a
+                      >
+                    
+                  
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </section>
+      <!--/ User List -->
+    </div>
+  
+  
+  </div>
+  

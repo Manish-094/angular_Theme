@@ -20,7 +20,6 @@ import { CoreSidebarModule } from '@core/components';
 import { CardSnippetModule } from '@core/components/card-snippet/card-snippet.module';
 
 import { coreConfig } from 'app/app-config';
-import { fakeBackendProvider } from 'app/auth/helpers'; // used to create fake backend
 import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
 import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
@@ -60,7 +59,7 @@ const appRoutes: Routes = [];
         CardSnippetModule,
         LayoutModule,
         ContentHeaderModule,
-        BlockUIModule.forRoot()
+        BlockUIModule.forRoot(),
     ],
     providers: [
         // ! IMPORTANT: Provider used to create fake backend, comment while using real API

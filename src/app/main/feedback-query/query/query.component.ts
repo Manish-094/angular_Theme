@@ -1,19 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { FeedbackService } from '../feedback.service';
+import { FeedbackService } from '../services/feedback.service';
 
 @Component({
   selector: 'app-query',
   templateUrl: './query.component.html',
-  styleUrls: ['./query.component.scss']
+  styleUrls: ['./query.component.scss'],
+  encapsulation: ViewEncapsulation.None
+
 })
 export class QueryComponent implements OnInit {
 
   queryForm !: FormGroup
   isFormValid : boolean = false;
+ 
   constructor(private _fb:FormBuilder,private _feedbackService:FeedbackService,private _toastr:ToastrService,private _coreSidebarService:CoreSidebarService,private modalService: NgbModal) { }
 
   get f(){
@@ -23,7 +26,8 @@ export class QueryComponent implements OnInit {
   ngOnInit(): void {
     this.queryForm =  this._fb.group({
       feedback_title:['',Validators.required],
-      feedback_description:['',Validators.required]
+      feedback_description:['',Validators.required],
+      feedback_type:['',Validators.required]
     })
   }
   onSubmit(data:any){
@@ -45,13 +49,13 @@ export class QueryComponent implements OnInit {
     this.queryForm.reset();
   }
 
-  toggleSidebar(name: any): void {
-    this._coreSidebarService.getSidebarRegistry(name).toggleOpen();
-  }
+
 
   // modal Basic
   modalOpen(modalBasic) {
     this.modalService.open(modalBasic);
   }
+
+  
 
 }

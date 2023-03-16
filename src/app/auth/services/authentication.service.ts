@@ -1,4 +1,4 @@
-import { LoginUserModel } from './../models/login-user.model';
+import { LoginUserModel } from '../models/login-user.model';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -11,7 +11,7 @@ export class AuthenticationService {
   public currentUser: Observable<User>;
 
   //private
-  private currentUserSubject: BehaviorSubject<User>;
+  public currentUserSubject: BehaviorSubject<User>;
 
   /**
    *

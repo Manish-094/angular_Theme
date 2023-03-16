@@ -106,7 +106,7 @@ export const menu: CoreMenu[] = [
             translate: 'MENU.APPS.USER.LIST',
             type: 'item',
             icon: 'circle',
-            url: '/feed/query'
+            url: '/feed/selfquery'
           },
           {
             id: 'list',

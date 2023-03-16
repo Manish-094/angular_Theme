@@ -23,7 +23,6 @@ import { CoreDirectivesModule } from '@core/directives/directives';
 import { SliderComponent } from './slider/slider.component';
 import { BlockUIModule } from 'ng-block-ui';
 import { AdminComponent } from './admin/admin.component';
-import { AdminSidebarComponent } from './admin-sidebar/admin-sidebar.component';
 
 
 
@@ -35,7 +34,6 @@ import { AdminSidebarComponent } from './admin-sidebar/admin-sidebar.component';
       UserListComponent,
       SliderComponent,
       AdminComponent,
-      AdminSidebarComponent,
      
       // CoreCardSnippetComponent
     ],

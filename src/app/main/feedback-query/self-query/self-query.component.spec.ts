@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminSidebarComponent } from './admin-sidebar.component';
+import { SelfQueryComponent } from './self-query.component';
 
-describe('AdminSidebarComponent', () => {
-  let component: AdminSidebarComponent;
-  let fixture: ComponentFixture<AdminSidebarComponent>;
+describe('SelfQueryComponent', () => {
+  let component: SelfQueryComponent;
+  let fixture: ComponentFixture<SelfQueryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdminSidebarComponent ]
+      declarations: [ SelfQueryComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AdminSidebarComponent);
+    fixture = TestBed.createComponent(SelfQueryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

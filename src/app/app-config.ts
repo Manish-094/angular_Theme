@@ -16,9 +16,9 @@ import { CoreConfig } from '@core/types';
 // prettier-ignore
 export const coreConfig: CoreConfig = {
   app: {
-    appName     : 'Angular',                                      // App Name
+    appName     : 'Tridhya',                                      // App Name
     appTitle    : 'Angular 14+ Bootstrap Admin Template', // App Title
-    appLogoImage: 'assets/images/icons/angular.svg',              // App Logo
+    appLogoImage: 'assets/images/icons/tridhya.png',              // App Logo
     appLanguage : 'en',                                           // App Default Language (en, fr, de, pt etc..)
   },
   layout: {

@@ -2,13 +2,13 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import { apiUrl } from "app/api/constant";
+import { APIURL } from "app/api/constant";
 
 export const environment = {
   production: false,
   hmr: false,
   // apiUrl: 'http://localhost:4000'
-  apiUrl : apiUrl,
+  apiUrl : APIURL,
 };
 
 /*

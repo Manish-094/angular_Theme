@@ -1,6 +1,6 @@
 
 
-<div class="content-wrapper container-xxl p-0">
+<div   class="content-wrapper container-xxl p-0 container-fluid">
     <div class="content-body">
       <!-- User List -->
       <section class="users-list-wrapper">
@@ -40,18 +40,18 @@
             </div>
           </div>
           <ngx-datatable
-            [rows]="rows"
-            [rowHeight]="50"
-            class="bootstrap core-bootstrap"
-            [limit]="selectedOption"
-            [columnMode]="ColumnMode.force"
-            [headerHeight]="50"
+          [rows]="rows" 
+          [rowHeight]="50" 
+          class="bootstrap core-bootstrap table-responsive"
+            [limit]="selectedOption" 
+            [columnMode]="ColumnMode.force" 
+            [headerHeight]="50" 
             [footerHeight]="50"
-            [scrollbarH]="true"
-            [count]="rowsCount"
-            [externalPaging]="true"
-            (page)="page($event)"
-            #tableRowDetails
+            [scrollbarH]="true" 
+            [count]="rowsCount" 
+            [externalPaging]="true" 
+            (page)="page($event)" 
+            #tableRowDetails>
             
           >
 
@@ -75,13 +75,13 @@
           </ng-template>
         </ngx-datatable-column>
         
-            <ngx-datatable-column name="Feedback title" prop="feedback_title" [width]="200"></ngx-datatable-column>
+            <ngx-datatable-column name="Feedback title" prop="feedback_title" [minWidth]="100"></ngx-datatable-column>
       
             <!-- <ngx-datatable-column name="description" prop="feedback_description" [width]="200"></ngx-datatable-column> -->
 
           
              
-            <ngx-datatable-column name="Assigned_To" prop="assigned_to" [width]="200">
+            <ngx-datatable-column name="Assigned_To" prop="assigned_to" [minWidth]="100">
                 <ng-template let-row="row" ngx-datatable-cell-template>
                   <div *ngFor="let person of row.assigned_to">
                   
@@ -93,7 +93,7 @@
             
   
            
-            <ngx-datatable-column name="feedback_status" prop="status" [width]="100">
+            <ngx-datatable-column name="feedback_status" prop="status" [minWidth]="100">
                 <ng-template let-status="value" ngx-datatable-cell-template>
                   <div class="badge badge-pill"
                       [ngClass]="{
@@ -111,7 +111,7 @@
               </ngx-datatable-column>
 
         
-              <ngx-datatable-column name="Actions" [width]="40" [sortable]="false">
+              <ngx-datatable-column name="Actions" [minWidth]="40" [sortable]="false">
                 <ng-template ngx-datatable-cell-template let-row="row">
                   
                   

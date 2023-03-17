@@ -1,7 +1,6 @@
 import { LoginUserModel } from '../models/login-user.model';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { User, Role } from 'app/auth/models';
 
@@ -41,6 +40,14 @@ export class AuthenticationService {
   get isClient() {
     return this.currentUser && this.currentUserSubject.value.role === Role.Client;
   }
+
+ get isPm(){
+  return this.currentUser && this.currentUserSubject.value.role === Role.PM;
+ }
+
+ get isNetwokhead(){
+  return this.currentUser && this.currentUserSubject.value.role === Role.NETWORK_HEAD;
+ }
 
   /**
    * User login

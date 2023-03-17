@@ -11,13 +11,15 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { BlockUIModule } from 'ng-block-ui';
 import { SelfQueryComponent } from './self-query/self-query.component';
+import { AssignesToComponent } from './assignes-to/assignes-to.component';
 
 
 @NgModule({
   declarations: [
     FeedbackComponent,
     QueryComponent,
-    SelfQueryComponent
+    SelfQueryComponent,
+    AssignesToComponent
   ],
   imports: [
     FeedbackQueryRoutingModule,

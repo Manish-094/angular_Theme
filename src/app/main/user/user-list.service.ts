@@ -1,11 +1,15 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { userListUrl } from 'app/api/constant';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { 
+  ActivatedRouteSnapshot, 
+  Resolve, 
+  RouterStateSnapshot 
+} from '@angular/router';
 
 
 @Injectable({
@@ -22,7 +26,9 @@ export class UserListService implements Resolve<any> {
   * @param _httpClient 
   */
 
-  constructor(private _httpClient: HttpClient,private __toastr:ToastrService ) {
+  constructor(
+    private _httpClient: HttpClient,
+    private __toastr:ToastrService ) {
       this.onUserListChanged = new BehaviorSubject({});
    }
 
@@ -33,7 +39,8 @@ export class UserListService implements Resolve<any> {
    * @returns 
    */
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):Observable<any> | Promise<any> | any {
+  resolve(route: ActivatedRouteSnapshot, 
+    state: RouterStateSnapshot):Observable<any> | Promise<any> | any {
     
   }
 

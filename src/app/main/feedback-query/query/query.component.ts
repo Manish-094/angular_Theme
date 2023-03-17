@@ -1,9 +1,8 @@
+import { ToastrService } from 'ngx-toastr';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FeedbackService } from '../services/feedback.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
-import { FeedbackService } from '../services/feedback.service';
 
 @Component({
   selector: 'app-query',
@@ -14,11 +13,18 @@ import { FeedbackService } from '../services/feedback.service';
 })
 export class QueryComponent implements OnInit {
 
+  //public variable
   queryForm !: FormGroup
   isFormValid : boolean = false;
  
-  constructor(private _fb:FormBuilder,private _feedbackService:FeedbackService,private _toastr:ToastrService,private _coreSidebarService:CoreSidebarService,private modalService: NgbModal) { }
+  constructor(
+    private _fb:FormBuilder,
+    private _feedbackService:FeedbackService,
+    private _toastr:ToastrService,
+    private modalService: NgbModal) { }
 
+  
+    //get form controls
   get f(){
     return this.queryForm.controls;
   }
@@ -30,6 +36,8 @@ export class QueryComponent implements OnInit {
       feedback_type:['',Validators.required]
     })
   }
+
+  //submit form
   onSubmit(data:any){
     this.isFormValid = true;
    if(this.queryForm.valid){
@@ -45,6 +53,8 @@ export class QueryComponent implements OnInit {
    }
   }
 
+
+  //reset form
   reset(){
     this.queryForm.reset();
   }

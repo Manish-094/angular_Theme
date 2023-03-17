@@ -1,11 +1,17 @@
-import { HttpParams } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
-import { ToastrService } from 'ngx-toastr';
 import { fromEvent } from 'rxjs';
-import { debounceTime, map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
+import { HttpParams } from '@angular/common/http';
+import { debounceTime, map } from 'rxjs/operators';
 import { FeedbackService } from '../services/feedback.service';
+import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
+import { 
+  Component, 
+  ElementRef,
+   OnInit, 
+   ViewChild, 
+   ViewEncapsulation 
+  } from '@angular/core';
 
 
 @Component({
@@ -25,7 +31,9 @@ export class SelfQueryComponent implements OnInit {
 
 
 
-  constructor(private _feedbackService:FeedbackService,private _toastr:ToastrService) { }
+  constructor(
+    private _feedbackService:FeedbackService,
+    private _toastr:ToastrService) { }
 
   // Public
   public rows : any;

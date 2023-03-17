@@ -1,15 +1,23 @@
-import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
-import { FeedbackService } from '../services/feedback.service';
-import { HttpParams } from '@angular/common/http';
-import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.service';
-import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { fromEvent } from 'rxjs';
-import { debounceTime, map } from 'rxjs/operators';
-import { FormBuilder, FormGroup, NgModel, Validators } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Status } from 'app/status.enum';
+import { ToastrService } from 'ngx-toastr';
+import { HttpParams } from '@angular/common/http';
+import { debounceTime, map } from 'rxjs/operators';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FeedbackService } from '../services/feedback.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
+import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.service';
 import Swal from 'sweetalert2';
+import { 
+  Component, 
+  ElementRef, 
+  OnInit, 
+  ViewChild, 
+  ViewEncapsulation 
+} from '@angular/core';
+
+
 
 @Component({
   selector: 'app-feedback',
@@ -24,6 +32,7 @@ export class FeedbackComponent implements OnInit {
   @ViewChild(DatatableComponent) table: DatatableComponent;
 
 
+  //variables
   isFormValid : boolean = false
   query_id:any
   feedbackUpdateForm !:FormGroup
@@ -31,7 +40,7 @@ export class FeedbackComponent implements OnInit {
 
 
 
-  // Public
+  // Public variable
   public sidebarToggleRef = false;
   public rows : any;
   public assign_value:any;
@@ -52,7 +61,13 @@ export class FeedbackComponent implements OnInit {
    * @param {CoreConfigService} _coreConfigService
    * @param {CoreSidebarService} _coreSidebarService
    */
-  constructor(private _feedbackService:FeedbackService,private _toastr:ToastrService,private _coreSidebarService:CoreSidebarService,private _fb:FormBuilder,private modalService:NgbModal) { }
+  constructor(
+    private _feedbackService:FeedbackService,
+    private _toastr:ToastrService,
+    private _coreSidebarService:CoreSidebarService,
+    private _fb:FormBuilder,
+    private modalService:NgbModal
+    ) { }
 
   ngOnInit(): void {
     this.getFeedbackData();
@@ -66,6 +81,7 @@ export class FeedbackComponent implements OnInit {
    }
 
  
+   //for description
   rowDetailsToggleExpand(row) {
     this.tableRowDetails.rowDetail.toggleExpandRow(row);
   }
@@ -88,6 +104,8 @@ export class FeedbackComponent implements OnInit {
   })
 }
 
+
+//pagination
 page(event){
   console.log(event.offset+1);
 // this.getUserListData('page',event.offset+1)
@@ -118,12 +136,11 @@ this.rows.forEach(row => {
 })
 }
 
+//searching debounceTime
 ngAfterViewInit(): void {
     const searchItem = fromEvent<any>(this.myInput.nativeElement,'keyup')
     searchItem.pipe(map(data=>data.target.value),debounceTime(1000)).subscribe((res)=>{
       const  params = new HttpParams()
-      .set('user_type',this.role_value)
-      .set('status',this.status_value)
       .set('search',this.searchValue)
       this.getFeedbackData(params)
     })
@@ -140,8 +157,6 @@ Totaldata() {
 
   /**
    * filterUpdate
-   *
-   * @param event
    */
   filterUpdate(event) {
     const  params = new HttpParams()
@@ -150,6 +165,7 @@ Totaldata() {
     .set('search',this.searchValue)
     this.getFeedbackData(params)
   }
+
 
     /**
    * Filter By Status
@@ -171,6 +187,7 @@ Totaldata() {
    * @param statusFilter
    */
   
+
   // modal Basic
   modalOpen(modalBasic,status:any,id:any) {
     this.modalService.open(modalBasic);
@@ -181,9 +198,10 @@ Totaldata() {
       status:[Status[status],Validators.required],
       feedback_remark:[null]
      })
-  
   }
 
+  
+  //feedback assign data
   feedbackAssignedData(params={}){
     this._feedbackService.feedbackAssigned(params).subscribe(res=>{
       if(res.status == 1){
@@ -228,7 +246,7 @@ deleteData(id: string) {
 }
 
 
-
+//submit login form
   onSubmit(data){
     // this.isFormValid = true
     

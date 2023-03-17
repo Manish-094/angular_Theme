@@ -1,11 +1,19 @@
-import { HttpParams } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.service';
-import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
-import { ToastrService } from 'ngx-toastr';
 import { fromEvent } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { HttpParams } from '@angular/common/http';
 import { debounceTime, map } from 'rxjs/operators';
 import { UserListService } from '../user-list.service';
+import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
+import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.service';
+import { 
+  Component, 
+  ElementRef, 
+  OnInit, 
+  ViewChild, 
+  ViewEncapsulation
+ } from '@angular/core';
+
+
 
 @Component({
   selector: 'app-user-list',
@@ -14,7 +22,8 @@ import { UserListService } from '../user-list.service';
   encapsulation: ViewEncapsulation.None
 })
 export class UserListComponent implements OnInit {
-
+  
+  @ViewChild('myInput') myInput!: ElementRef
 
   // Public
   public sidebarToggleRef = false;
@@ -89,25 +98,29 @@ export class UserListComponent implements OnInit {
   // -----------------------------------------------------------------------------------------------------
 
 
-  
+//getting user list datas  
 getUserListData(params){
   this._userListService.getDataTableRows(params).subscribe((res)=>{
     if(res.status == 1){
-      this._toastr.success(res.message)
-      this.rows = res.data.data;
-      this.rowsCount = res.data.total;
-      console.log(this.rowsCount,1000);
-      
+      // this._toastr.success(res.message)
+    
+      if(res.data == null){
+        this.rows = [];
+        this.rowsCount = 0;
+        this._toastr.error(res.message)
+      }
+      else{
+        this.rows = res.data.data;
+        this.rowsCount = res.data.total;
+      }      
       console.log(res,54)
     }
     this.setRole(this.rows);
     this.setDepartment(this.rows);
-    // this.setStatus(this.rows);
-    // this.filterData(this.rows);
-
   })
 }
 
+//pagination
 page(event){
   console.log(event.offset+1);
 // this.getUserListData('page',event.offset+1)
@@ -118,12 +131,7 @@ this.getUserListData(params)
   
 }
 
-/**
- * common filter by role and status function 
- */
-
-
-
+//set role
 setRole(rows){
   this.rows.forEach(row => {
     if(row.user_type == 1){
@@ -156,6 +164,8 @@ setRole(rows){
   });
 }
 
+
+//set departments
 setDepartment(rows){
   this.rows.forEach((row)=>{
     if(row.department == 1){
@@ -205,32 +215,19 @@ setDepartment(rows){
 }
 
 
+//get total data
 Totaldata() {
   const params = new HttpParams()
   .set('limit', this.selectedOption)
   this.getUserListData(params)
 }
 
-  /**
-   * filterUpdate
-   *
-   * @param event
-   */
-  // filterUpdate(event) {
-  //   const  params = new HttpParams()
-  //   .set('user_type',this.role_value)
-  //   .set('status',this.status_value)
-  //   .set('search',this.searchValue)
-  //   this.getUserListData(params)
-  // }
 
-  @ViewChild('myInput') myInput!: ElementRef
+
 ngAfterViewInit(): void {
     const searchItem = fromEvent<any>(this.myInput.nativeElement,'keyup')
     searchItem.pipe(map(data=>data.target.value),debounceTime(1000)).subscribe((res)=>{
       const  params = new HttpParams()
-      .set('user_type',this.role_value)
-      .set('status',this.status_value)
       .set('search',this.searchValue)
       this.getUserListData(params)
     })

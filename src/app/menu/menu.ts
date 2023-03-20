@@ -160,11 +160,11 @@ export const menu: CoreMenu[] = [
       },
       {
         id: 'list',
-        title: 'AssignTo',
+        title: 'AssignQuery',
         translate: 'MENU.APPS.USER.LIST',
         type: 'item',
         icon: 'circle',
-        role:['HR_MANAGER','NETWORK_HEAD','ACCOUNT_HEAD','DELIVERY_MANAGER'],
+        role:['HR_MANAGER','Network Head','ACCOUNT_HEAD','DELIVERY_MANAGER'],
         url: '/feed/assign'
       }
     ]

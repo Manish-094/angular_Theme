@@ -1,10 +1,16 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
-import { allSliderUrl, deleteSlideUrl, editSlidrUrl, getsliderUrl, sliderUrl } from 'app/api/constant';
-import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, OnInit } from '@angular/core';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { catchError, map } from 'rxjs/operators';
+import { 
+  ALLSLIDERURL, 
+  DELETESLIDERURL, 
+  GETSLIDERURL, 
+  SLIDERURL } 
+  from 'app/api/constant';
+
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +29,7 @@ export class SliderService implements OnInit {
 
   sliderData(formData:any):Observable<any>{
     this.blockUI.start('Loading...');
-    return this._httpService.post(sliderUrl,formData
+    return this._httpService.post(SLIDERURL,formData
     ).pipe(map((res:any)=>{
       this.blockUI.stop();
       return res;
@@ -36,7 +42,7 @@ export class SliderService implements OnInit {
 
   getSlider(id:any):Observable<any>{
     this.blockUI.start('Loading...');
-    return this._httpService.get(getsliderUrl+id).pipe(map((data)=>{
+    return this._httpService.get(GETSLIDERURL+id).pipe(map((data)=>{
       this.blockUI.stop();
       return data;
     }),catchError((error) => {
@@ -51,7 +57,7 @@ export class SliderService implements OnInit {
 
   getAllSlider(data:any):Observable<any>{
     this.blockUI.start('Loading...');
-    return this._httpService.get(allSliderUrl).pipe(map((data)=>{
+    return this._httpService.get(ALLSLIDERURL).pipe(map((data)=>{
       this.blockUI.stop();
       return data;
     }),catchError((error) => {
@@ -66,7 +72,7 @@ export class SliderService implements OnInit {
 
   deleteData(id: string) {
     this.blockUI.start('Loading...');
-    return this._httpService.delete(deleteSlideUrl+id).pipe(map((res:any)=>{
+    return this._httpService.delete(DELETESLIDERURL+id).pipe(map((res:any)=>{
       this.blockUI.stop();
       return res;
     }),catchError((error) => {
@@ -83,7 +89,7 @@ export class SliderService implements OnInit {
 
   editSlider(id:string,data:any):Observable<any>{
     this.blockUI.start('Loading...');
-    return this._httpService.put(editSlidrUrl+id,data).pipe(map((res)=>{
+    return this._httpService.put(GETSLIDERURL+id,data).pipe(map((res)=>{
       this.blockUI.stop();
       return res;
     }),catchError((error) => {

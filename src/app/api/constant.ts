@@ -6,29 +6,31 @@ export const VERSION : string = "/v1";
 export const APIURL : string = BASEURL+VERSION
 
 //feedback/query api url
-export const createFeedbackUrl = APIURL+"/feedback/create";   //create feedback url
-export const getAllFeedback =   APIURL+"/feedback/get-all";   //get allFeedback data
-export const feedbackUpdaateUrl = APIURL+"/feedback/update/";  //update feedback
-export const getFeedbackUrl = APIURL+"/feedback/get";          //get single feedback data  
-export const feedbackDeleteUrl = APIURL+"/feedback/delete/";   //delete feedback data
-export const feedbackAssignedTo = APIURL+"/feedback/get-assigned";  //feedback assigned
+export const CREATEFEEDBACKURL = APIURL+"/feedback/create";   //create feedback url
+export const GETALLFEEDBACK =   APIURL+"/feedback/get-all";   //get allFeedback data
+export const FEEDBACKUPDATEURL = APIURL+"/feedback/update/";  //update feedback
+export const GETFEEDBACKURL = APIURL+"/feedback/get";          //get single feedback data  
+export const FEEDBACKDELETEURL = APIURL+"/feedback/delete/";   //delete feedback data
+export const FEEDBACKASSIGNEDTO = APIURL+"/feedback/get-assigned";  //feedback assigned
+export const FEEDBACKUSER = APIURL+"/feedback/get-users/";           // feedback users   
+export const GETASSIGNEDQUERYDATAURL = APIURL+"/feedback/get-assigned"
 
 
-//user-list api url
-export const userListUrl = APIURL+"/user/list";   
-export const sliderUrl = APIURL+"/slider/add-slider";
-export const getsliderUrl = APIURL+"/slider/get-slider/";
-export const allSliderUrl = APIURL+"/slider/get-slider";
-export const deleteSlideUrl = APIURL+"/slider/delete-slider/";  // delete api url
-export const editSlidrUrl = APIURL+"/slider/edit-slider/";   // edit-slider url
+//user-list api url =>slider
+export const USERLISTURL = APIURL+"/user/list";   
+export const SLIDERURL = APIURL+"/slider/add-slider";
+export const GETSLIDERURL = APIURL+"/slider/get-slider/";
+export const ALLSLIDERURL = APIURL+"/slider/get-slider";
+export const DELETESLIDERURL = APIURL+"/slider/delete-slider/";  // delete api url
+export const EDITSLIDER = APIURL+"/slider/edit-slider/";   // edit-slider url
 
 //admin api url
-export const adminListUrl = APIURL+"/admin/admin-list";   //admin-list api url
+export const ADMINLISTURL = APIURL+"/admin/admin-list";   //admin-list api url
 
 //users api url
-export const registrationUrl = APIURL+"/user/create"; //url for signUp api
-export const loginUrl = APIURL+"/user/login";         //url for login api
-export const passwordResetUrl = APIURL+"/users/forgot-password"; //url for resetPassword
+export const REGISTRATIONURL = APIURL+"/user/create"; //url for signUp api
+export const LOGINURL = APIURL+"/user/login";         //url for login api
+export const PASSWORDRESETURL = APIURL+"/users/forgot-password"; //url for resetPassword
 
 
 

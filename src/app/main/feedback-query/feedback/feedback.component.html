@@ -25,10 +25,9 @@
       <div class="form-group p-2">
         <label for="description">feedback_remark</label>
         <textarea placeholder="feedback_remark" class="form-control" formControlName="feedback_remark"></textarea>
-        <ng-container *ngIf=" !f?.feedback_remark?.valid && (f?.feedback_remark?.dirty || f?.feedback_remark?.touched)">
-          <small class="form-text" [hidden]="!f?.feedback_remark?.errors?.['required']">Feedback remark is required
-            *</small>
-        </ng-container>
+        <ng-container *ngIf="isFormValid || (!f?.feedback_remark?.valid && (f?.feedback_remark?.dirty || f?.feedback_remark?.touched))">
+          <small class="form-text" [hidden]="!f?.feedback_remark?.errors?.['required']">Feedback remark is required *</small>
+      </ng-container>
       </div>
       <div class="form-group p-2">
         <button type="submit" class="btn btn-primary px-4">Update</button>
@@ -49,22 +48,7 @@
     <!-- User List -->
     <section class="users-list-wrapper">
       <!-- users filter start -->
-      <div class="card">
-        <!-- <h5 class="card-header">Search Filter</h5> -->
-        <div class="card-body">
-          <div class="users-list-filter">
-            <form>
-              <div class="row justify-content-between">
-
-                <div class="col-12 col-md-4">
-                  <app-query></app-query>
-
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+ 
       <!-- users filter end -->
 
       <div class="card">
@@ -72,7 +56,7 @@
           <div class="col-md-6 col-12 py-3 ">
             <div class="d-flex justify-content-between align-items-center m-1">
               <label class="d-flex align-items-center pl-3">Show
-                <select class="form-control mx-25" (change)="Totaldata()">
+                <select class="form-control mx-25" (change)="totalData()">
                   <option value="5">5</option>
                   <option value="10">10</option>
                   <option value="25">25</option>
@@ -110,7 +94,7 @@
           <!-- for description -->
           <ngx-datatable-row-detail [rowHeight]="50">
             <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
-              <div class="ml-75 pl-5 pt-75">
+              <div class="ml-75  pl-5 pt-75">
                 <div>
                   <strong>DESCRIPTION:</strong>
                   {{row.feedback_description}}
@@ -149,12 +133,12 @@
 
           <ngx-datatable-column name="feedback_status" prop="status" [minWidth]="100">
             <ng-template let-status="value" ngx-datatable-cell-template>
-              <div class="badge badge-pill" [ngClass]="{
+              <div class="badge badge-pill"  [ngClass]="{
               
                       'badge-light-success': status ==  'open',
                       'badge-light-secondary': status == 'in_process',
-                      'badge-light-secondary': status == 'closed',
-                      'badge-light-warning': status == 'confirmed'
+                      'badge-light-warning': status == 'closed',
+                      'badge-light-info': status == 'confirmed'
                     }">
 
                 {{status}}

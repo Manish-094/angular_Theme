@@ -1,4 +1,62 @@
+<div class="card">
+  <!-- <h5 class="card-header">Search Filter</h5> -->
+  <div class="card-body">
+    <div class="users-list-filter">
+      <form>
+        <div class="row justify-content-between">
 
+          <div class="col-12 col-md-4">
+            <app-query></app-query>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<ng-template #modalBasic let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel1">Update Feedback</h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+
+    <form [formGroup]="feedbackUpdateForm" (ngSubmit)="onSubmit(feedbackUpdateForm.value)" novalidate>
+      <div class="form-group p-2">
+        <select class="form-control" formControlName="status">
+          <option value="1">open</option>
+          <option value="2">in_process</option>
+          <option value="3">closed</option>
+          <option value="4">confirmed</option>
+        </select>
+        <!-- <label for="title">Status</label>
+                      <input type="text" name="status" placeholder="Status" class="form-control" formControlName="status"> -->
+        <!-- <ng-container *ngIf="isFormValid || (!f?.status?.valid && (f?.status?.dirty || f?.status?.touched))">
+                          <small class="form-text" [hidden]="!f?.status?.errors?.['required']">status is required *</small>
+                      </ng-container> -->
+      </div>
+      <div class="form-group p-2">
+        <label for="description">feedback_remark</label>
+        <textarea placeholder="feedback_remark" class="form-control" formControlName="feedback_remark"></textarea>
+        <ng-container *ngIf="isFormValid || (!f?.feedback_remark?.valid && (f?.feedback_remark?.dirty || f?.feedback_remark?.touched))">
+          <small class="form-text" [hidden]="!f?.feedback_remark?.errors?.['required']">Feedback remark is required *</small>
+      </ng-container>
+      </div>
+      <div class="form-group p-2">
+        <button type="submit" class="btn btn-primary px-4">Update</button>
+        <button type="button" (click)="modal.dismiss('cancel')" class="btn btn-danger px-4 mx-4">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+
+</ng-template>
+<!-- / Modal -->
 
 <div   class="content-wrapper container-xxl p-0 container-fluid">
     <div class="content-body">
@@ -14,7 +72,7 @@
               <div class="d-flex justify-content-between align-items-center m-1">
                 <label class="d-flex align-items-center pl-3"
                   >Show
-                  <select class="form-control mx-25" (change)="Totaldata()">
+                  <select class="form-control mx-25" (change)="totalData()">
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="25">25</option>
@@ -100,8 +158,8 @@
                 
                         'badge-light-success': status ==  'open',
                         'badge-light-secondary': status == 'in_process',
-                        'badge-light-secondary': status == 'closed',
-                        'badge-light-warning': status == 'confirmed'
+                        'badge-light-warning': status == 'closed',
+                        'badge-light-info': status == 'confirmed'
                       }"
                   >
                   

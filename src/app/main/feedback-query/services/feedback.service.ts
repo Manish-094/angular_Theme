@@ -5,12 +5,14 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { catchError, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { 
-  createFeedbackUrl, 
-  feedbackAssignedTo, 
-  feedbackDeleteUrl, 
-  feedbackUpdaateUrl, 
-  getAllFeedback, 
-  getFeedbackUrl 
+  CREATEFEEDBACKURL, 
+  FEEDBACKASSIGNEDTO, 
+  FEEDBACKDELETEURL, 
+  FEEDBACKUPDATEURL, 
+  FEEDBACKUSER, 
+  GETALLFEEDBACK, 
+  GETASSIGNEDQUERYDATAURL, 
+  GETFEEDBACKURL 
 } from 'app/api/constant';
 
 
@@ -31,7 +33,7 @@ export class FeedbackService {
 
   sendfeedbackData(queryData:any):Observable<any>{
     this.blockUI.start('Loading...');
-    return this._http.post(createFeedbackUrl,queryData
+    return this._http.post(CREATEFEEDBACKURL,queryData
     ).pipe(map((res:any)=>{
       this.blockUI.stop();
       return res;
@@ -46,7 +48,7 @@ export class FeedbackService {
   
   getAllFeedbackData(params): Observable<any> {
     this.blockUI.start('Loading...');
-      return this._http.get(getAllFeedback,{params}).pipe(map((data)=>{
+      return this._http.get(GETALLFEEDBACK,{params}).pipe(map((data)=>{
         this.blockUI.stop();
         return data;
       }),catchError((error) => {
@@ -62,7 +64,7 @@ export class FeedbackService {
 //feedback update
 feedbackUpdate(id:string,data:any):Observable<any>{
   this.blockUI.start('Loading...');
-  return this._http.patch(feedbackUpdaateUrl+id,data).pipe(map(data=>{
+  return this._http.patch(FEEDBACKUPDATEURL+id,data).pipe(map(data=>{
     this.blockUI.stop();
     return data;
   }),catchError((error) => {
@@ -76,7 +78,7 @@ feedbackUpdate(id:string,data:any):Observable<any>{
 //deleteFeedback
 deleteFeedbackData(id:any):Observable<any>{
   this.blockUI.start('Loading...');
-  return this._http.delete(feedbackDeleteUrl+id).pipe(map(data=>{
+  return this._http.delete(FEEDBACKDELETEURL+id).pipe(map(data=>{
     this.blockUI.stop();
     return data;
   }),catchError((error) => {
@@ -90,7 +92,7 @@ deleteFeedbackData(id:any):Observable<any>{
 //get Singlefeedback
 singlefeedback(params):Observable<any>{
   this.blockUI.start('Loading...');
-  return this._http.get(getFeedbackUrl,{params}).pipe(map(data=>{
+  return this._http.get(GETFEEDBACKURL,{params}).pipe(map(data=>{
     this.blockUI.stop();
     return data;
   }),catchError((error) => {
@@ -104,12 +106,40 @@ singlefeedback(params):Observable<any>{
 //feedback Assigned data
 feedbackAssigned(params):Observable<any>{
   this.blockUI.start('Loading...');
-   return this._http.get(feedbackAssignedTo,{params}).pipe(map(data=>{
+   return this._http.get(FEEDBACKASSIGNEDTO,{params}).pipe(map(data=>{
     this.blockUI.stop();
     return data;
    }),catchError((error) => {
     this.blockUI.stop();
     console.log(error);
+    this.commonErrorHandler(error.status, error.error.message);
+    throw error;
+  }))
+}
+
+//get aassignedUser of the department
+assigneduserDepartment(id:any,data:any):Observable<any>{
+  this.blockUI.start('Loading...');
+  return this._http.post(FEEDBACKUSER+id,{data}).pipe(map(data=>{
+    this.blockUI.stop();
+    return data
+  }),catchError((error) => {
+    console.log(error);
+    this.blockUI.stop();
+    this.commonErrorHandler(error.status, error.error.message);
+    throw error;
+  }))
+}
+
+//get assigned query data
+getAssignedquerydata(params):Observable<any>{
+  this.blockUI.start('Loading...');
+  return this._http.get(GETASSIGNEDQUERYDATAURL,{params}).pipe(map(data=>{
+    this.blockUI.stop();
+    return data
+  }),catchError((error) => {
+    console.log(error);
+    this.blockUI.stop();
     this.commonErrorHandler(error.status, error.error.message);
     throw error;
   }))

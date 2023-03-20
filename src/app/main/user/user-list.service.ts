@@ -1,6 +1,6 @@
 import { ToastrService } from 'ngx-toastr';
 import { Injectable } from '@angular/core';
-import { userListUrl } from 'app/api/constant';
+import { USERLISTURL } from 'app/api/constant';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -54,7 +54,7 @@ export class UserListService implements Resolve<any> {
 
      getDataTableRows(params): Observable<any> {
     this.blockUI.start('Loading...');
-      return this._httpClient.get(userListUrl,{params}).pipe(map((data)=>{
+      return this._httpClient.get(USERLISTURL,{params}).pipe(map((data)=>{
         this.blockUI.stop();
         return data;
       }),catchError((error) => {

@@ -27,6 +27,7 @@ import {
 
 })
 export class FeedbackComponent implements OnInit {
+  
   @ViewChild('tableRowDetails') tableRowDetails: any;
   @ViewChild('myInput') myInput!: ElementRef
   @ViewChild(DatatableComponent) table: DatatableComponent;
@@ -36,10 +37,6 @@ export class FeedbackComponent implements OnInit {
   isFormValid : boolean = false
   query_id:any
   feedbackUpdateForm !:FormGroup
-
-
-
-
   // Public variable
   public sidebarToggleRef = false;
   public rows : any;
@@ -64,15 +61,19 @@ export class FeedbackComponent implements OnInit {
   constructor(
     private _feedbackService:FeedbackService,
     private _toastr:ToastrService,
-    private _coreSidebarService:CoreSidebarService,
     private _fb:FormBuilder,
     private modalService:NgbModal
     ) { }
 
+
+  //life cycle hook
   ngOnInit(): void {
-    this.getFeedbackData();
-    // this.feedbackAssignedData();
-   
+    this.getfeedbackData();
+
+     this.feedbackUpdateForm = this._fb.group({
+      status:['',Validators.required],
+      feedback_remark:['',Validators.required]
+     })
    }
  
    //form controls
@@ -87,7 +88,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   //feedback data
- getFeedbackData(params = {}){
+ getfeedbackData(params = {}){
   this._feedbackService.getAllFeedbackData(params).subscribe((res)=>{
     if(res.status == 1){
       this._toastr.success(res.message)
@@ -112,7 +113,7 @@ page(event){
 const params = new HttpParams()
 .set('page', event.offset+1)
 .set('limit', this.selectedOption)
-this.getFeedbackData(params)
+this.getfeedbackData(params)
   
 }
 
@@ -142,17 +143,17 @@ ngAfterViewInit(): void {
     searchItem.pipe(map(data=>data.target.value),debounceTime(1000)).subscribe((res)=>{
       const  params = new HttpParams()
       .set('search',this.searchValue)
-      this.getFeedbackData(params)
+      this.getfeedbackData(params)
     })
 }
 
 
 
 //get total data
-Totaldata() {
+totalData() {
   const params = new HttpParams()
   .set('limit', this.selectedOption)
-  this.getFeedbackData(params)
+  this.getfeedbackData(params)
 }
 
   /**
@@ -163,7 +164,7 @@ Totaldata() {
     .set('user_type',this.role_value)
     .set('status',this.status_value)
     .set('search',this.searchValue)
-    this.getFeedbackData(params)
+    this.getfeedbackData(params)
   }
 
 
@@ -175,7 +176,7 @@ Totaldata() {
     filterByStatus(event: { value: any; }) {
       const params = new HttpParams().set('status',event.value)
       .set('user_type',this.role_value)
-       this.getFeedbackData(params)
+       this.getfeedbackData(params)
        this.status_value = event.value;
     }
 
@@ -201,16 +202,7 @@ Totaldata() {
   }
 
   
-  //feedback assign data
-  feedbackAssignedData(params={}){
-    this._feedbackService.feedbackAssigned(params).subscribe(res=>{
-      if(res.status == 1){
-        this._toastr.success("assigned data get successfully")
-        console.log(res,22)
-      }
-    })
-  }
-
+ 
 
 
 //delete feedback
@@ -232,13 +224,10 @@ deleteData(id: string) {
       this._feedbackService.deleteFeedbackData(id).subscribe(
         data => {
           console.log(data,100);
-          this.getFeedbackData(HttpParams)
-          
-          Swal.fire(
-            'Deleted!',
-            'Your data has been deleted.',
-            'success'
-          );
+          if(data.status == 1){
+            this._toastr.success("deleted successfully !")
+          this.getfeedbackData(HttpParams)
+          }
         }
       );
     }
@@ -248,17 +237,19 @@ deleteData(id: string) {
 
 //submit login form
   onSubmit(data){
-    // this.isFormValid = true
+    this.isFormValid = true
     
-      this._feedbackService.feedbackUpdate(this.query_id,data).subscribe(res=>{
-        if(res.status == 1){
-          this._toastr.success(res.message)
-          console.log(data,55)
-          this.feedbackUpdateForm.reset()
-          this.getFeedbackData(HttpParams)
-          this.modalService.dismissAll()
-        }
-      })
+      if(this.feedbackUpdateForm.valid){
+        this._feedbackService.feedbackUpdate(this.query_id,data).subscribe(res=>{
+          if(res.status == 1){
+            this._toastr.success("updated successfully!")
+            console.log(data,55)
+            this.feedbackUpdateForm.reset()
+            this.getfeedbackData(HttpParams)
+            this.modalService.dismissAll()
+          }
+        })
+      }
   }
 
 }

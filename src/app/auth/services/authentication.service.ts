@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { User, Role } from 'app/auth/models';
+import { user_type } from '../models/user_type.enum';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -41,13 +42,11 @@ export class AuthenticationService {
     return this.currentUser && this.currentUserSubject.value.role === Role.Client;
   }
 
- get isPm(){
-  return this.currentUser && this.currentUserSubject.value.role === Role.PM;
- }
+  get isNetworkHead(){
+    return this.currentUser && this.currentUserSubject.value.role === Role.NETWORK_HEAD;
+  }
 
- get isNetwokhead(){
-  return this.currentUser && this.currentUserSubject.value.role === Role.NETWORK_HEAD;
- }
+  
 
   /**
    * User login
@@ -76,5 +75,13 @@ export class AuthenticationService {
     let currentUser: User;
     return currentUser;
   }
+
+  //set role
+// setRole(){
+//   const user = JSON.parse(localStorage.getItem('currentUser'))
+//   user.role = user_type[user.user_type]
+//   this.currentUserSubject.next(user)
+//   return localStorage.setItem('currentUser',JSON.stringify(user))
+// }
 
 }

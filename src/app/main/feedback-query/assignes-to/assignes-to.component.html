@@ -1,1 +1,233 @@
-<p>assignes-to works!</p>
+<!-- Modal -->
+<ng-template #modalBasic let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel1">Update Feedback</h4>
+        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+
+        <form [formGroup]="feedbackUpdateForm" (ngSubmit)="onSubmit(feedbackUpdateForm.value)" novalidate>
+            <div class="form-group p-2">
+                <select class="form-control" formControlName="status">
+                    <option value="1">open</option>
+                    <option value="2">in_process</option>
+                    <option value="3">closed</option>
+                    <option value="4">confirmed</option>
+                </select>
+                <!-- <label for="title">Status</label>
+                        <input type="text" name="status" placeholder="Status" class="form-control" formControlName="status"> -->
+                <!-- <ng-container *ngIf="isFormValid || (!f?.status?.valid && (f?.status?.dirty || f?.status?.touched))">
+                            <small class="form-text" [hidden]="!f?.status?.errors?.['required']">status is required *</small>
+                        </ng-container> -->
+            </div>
+            <div class="form-group p-2">
+                <label for="description">feedback_remark</label>
+                <textarea placeholder="feedback_remark" class="form-control"
+                    formControlName="feedback_remark"></textarea>
+                <ng-container
+                    *ngIf=" isFormValid || (!f?.feedback_remark?.valid) && (f?.feedback_remark?.dirty || f?.feedback_remark?.touched)">
+                    <small class="form-text" [hidden]="!f?.feedback_remark?.errors?.['required']">Feedback remark is
+                        required
+                        *</small>
+                </ng-container>
+            </div>
+            <div class="form-group p-2">
+                <button type="submit" class="btn btn-primary px-4">Update</button>
+                <button type="button" (click)="modal.dismiss('cancel')" class="btn btn-danger px-4 mx-4">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+
+</ng-template>
+<!-- / Modal -->
+
+
+
+
+
+  <!-- Modal -->
+  <ng-template #modalVC let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalCenterTitle">Reassigned Query</h5>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+      <form>
+        <div class="form-group p-2">
+            <label for="assign to">Assign_to</label>
+            <select class="form-control">
+                <ng-container  *ngFor="let data of assignedData; let i = index;">
+                <option value="">{{data.requested_by.first_name}} 
+                    {{data.requested_by.last_name}} 
+                </option>
+            </ng-container>
+            </select>
+        </div>
+        <div class="form-group p-2">
+            <button type="submit" class="btn btn-primary px-4">Submit</button>
+            <button type="button" (click)="modal.dismiss('cancel')" class="btn btn-danger px-4 mx-4">Cancel</button>
+        </div>
+      </form>
+    </div>
+    
+  </ng-template>
+  <!-- / Modal -->
+
+
+
+
+
+
+<div class="content-wrapper container-xxl p-0 container-fluid">
+    <div class="content-body">
+        <!-- User List -->
+        <section class="users-list-wrapper">
+            <!-- users filter start -->
+
+            <!-- users filter end -->
+
+            <div class="card">
+                <div class="row">
+                    <div class="col-md-6 col-12 py-3 ">
+                        <div class="d-flex justify-content-between align-items-center m-1">
+                            <label class="d-flex align-items-center pl-3">Show
+                                <select class="form-control mx-25" (change)="totalData()">
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                                entries</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12 d-flex justify-content-start justify-content-md-end">
+                        <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pb-md-0">
+                            <label class="d-flex align-items-center ml-1 ml-md-0 pr-3">Search:<input
+                                    [(ngModel)]="searchValue" name="searchValue" type="search"
+                                    class="form-control ml-25" #myInput /></label>
+
+                        </div>
+                    </div>
+                </div>
+                <ngx-datatable [rows]="rows" [rowHeight]="50" class="bootstrap core-bootstrap table-responsive"
+                    [limit]="selectedOption" [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50"
+                    [scrollbarH]="true" [count]="rowsCount" [externalPaging]="true" (page)="page($event)"
+                    #tableRowDetails>
+
+
+                    >
+
+                    <!-- for description -->
+                    <ngx-datatable-row-detail [rowHeight]="50">
+                        <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+                            <div class="ml-75 pl-5 pt-75">
+                                <div>
+                                    <strong>DESCRIPTION:</strong>
+                                    {{row.feedback_description}}
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-row-detail>
+                    <ngx-datatable-column [width]="50" [resizeable]="false" [sortable]="false" [draggable]="false"
+                        [canAutoResize]="false">
+                        <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                            <a href="javascript:void(0)" [class.datatable-icon-right]="!expanded"
+                                [class.datatable-icon-down]="expanded" title="Expand/Collapse Row"
+                                (click)="rowDetailsToggleExpand(row)">
+                            </a>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="Feedback title" prop="feedback_title"
+                        [minWidth]="100"></ngx-datatable-column>
+
+
+
+
+
+                    <ngx-datatable-column name="Assign_Department" prop="assigned_department" [width]="100">
+                        <ng-template let-assigned_department="value" ngx-datatable-cell-template>
+                            <div>
+                                <i class="feather font-medium-3" [ngClass]="{
+            
+                    'icon-slack text-primary': assigned_department == 'ADMIN',
+                    'icon-slack text-danger': assigned_department == 'HR',
+                    'icon-slack text-danger': assigned_department == 'ACCOUNT',
+                    'icon-slack text-danger': assigned_department == 'MOBILE_DEVELOPMENT',
+                    'icon-slack text-danger': assigned_department == 'FULLSTACK_DEVELOPMENT',
+                    'icon-slack text-danger': assigned_department == 'PHP_DEVELOPMENT',
+                    'icon-slack text-danger': assigned_department == 'ECOMMERCE_DEVELOPMENT',
+                    'icon-slack text-danger': assigned_department == 'DOTNET_DEVELOPMENT',
+                    'icon-slack text-danger': assigned_department == 'LIFERAY_DEVELOPMENT',
+                    'icon-slack text-danger': assigned_department == 'DESIGN',
+                    'icon-slack text-danger': assigned_department == 'QA',
+                    'icon-slack text-danger': assigned_department == 'NETWORK',
+                    'icon-slack text-danger': assigned_department == 'SALES'
+                  }"></i>
+                                <!-- {{ role == 1?"ADMIN":role == 2?"DELIVERY_MANAGER":role == 3?"ACCOUNTS":role ==4?"HR" 
+                :role ==5?"PM":role ==6?"TL":role ==7?"USER":"others"}} -->
+                                {{assigned_department}}
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+
+                    <ngx-datatable-column name="requested_by" prop="requested_by.first_name"
+                        [minWidth]="100"></ngx-datatable-column>
+
+
+                    <ngx-datatable-column name="feedback_status" prop="status" [minWidth]="100">
+                        <ng-template let-status="value" ngx-datatable-cell-template>
+                            <div class="badge badge-pill" [ngClass]="{
+                
+                        'badge-light-success': status ==  'open',
+                        'badge-light-info': status == 'in_process',
+                        'badge-light-secondary': status == 'closed',
+                        'badge-light-warning': status == 'confirmed'
+                      }">
+
+                                {{status}}
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+
+                    <ngx-datatable-column name="Actions" [minWidth]="40" [sortable]="false">
+                        <ng-template ngx-datatable-cell-template let-row="row">
+
+
+                            <div container="body">
+                                <!-- <a routerLink="/apps/user/user-view/{{ row.id }}" 
+                        ><span [data-feather]="'file-text'" [size]="16" [class]="'mr-50'"></span> Details</a
+                      > -->
+
+
+
+                                <a (click)="modalOpen(modalBasic,row.status,row._id)"><span [data-feather]="'edit'"
+                                        [size]="16" [class]="'mr-50'" class="text-primary"></span></a>
+
+                                        <a (click)="modalOpenVC(modalVC,row._id)"><span [data-feather]="'file-text'"
+                                            [size]="16" [class]="'mr-50'" class="text-primary"></span></a>
+
+                                <a *ngIf="row.status=='open'" (click)="deleteData(row._id)"><span
+                                        [data-feather]="'trash'" [size]="16" [class]="'mr-50'"
+                                        class="text-danger"></span></a>
+
+
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </div>
+        </section>
+        <!--/ User List -->
+    </div>
+
+
+</div>

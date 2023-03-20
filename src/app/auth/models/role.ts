@@ -1,5 +1,5 @@
 ﻿export enum Role {
-  Admin = 'Admin',
+  Admin = 1,
   Client = 'Client',
   User = 'User',
   DELIVERY_MANAGER='DELIVERY_MANAGER',
@@ -8,7 +8,7 @@
   PM='PM',
   TL='TL',
   TRAINEE='TRAINEE',
-  NETWORK_HEAD='NETWORK_HEAD',
+  NETWORK_HEAD=9,
   ACCOUNT_HEAD='ACCOUNT_HEAD',
   HR_MANAGER='HR_MANAGER'
 }

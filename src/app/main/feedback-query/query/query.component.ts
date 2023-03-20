@@ -16,6 +16,8 @@ export class QueryComponent implements OnInit {
   //public variable
   queryForm !: FormGroup
   isFormValid : boolean = false;
+  public ReactiveUDFormSubmitted = false;
+
  
   constructor(
     private _fb:FormBuilder,
@@ -23,12 +25,7 @@ export class QueryComponent implements OnInit {
     private _toastr:ToastrService,
     private modalService: NgbModal) { }
 
-  
-    //get form controls
-  get f(){
-    return this.queryForm.controls;
-  }
-
+    //life cycle hook
   ngOnInit(): void {
     this.queryForm =  this._fb.group({
       feedback_title:['',Validators.required],
@@ -37,10 +34,21 @@ export class QueryComponent implements OnInit {
     })
   }
 
+
+  
+    //get form controls
+  get f(){
+    return this.queryForm.controls;
+  }
+  
+  
   //submit form
   onSubmit(data:any){
-    this.isFormValid = true;
-   if(this.queryForm.valid){
+    this.ReactiveUDFormSubmitted = true;
+    if (this.queryForm.invalid) {
+      return;
+    }
+   else{
     this._feedbackService.sendfeedbackData(data).subscribe(res=>{
       if(res.status == 1){
         this._toastr.success(res.message)
@@ -57,7 +65,10 @@ export class QueryComponent implements OnInit {
   //reset form
   reset(){
     this.queryForm.reset();
+    this.ReactiveUDFormSubmitted = false;
   }
+  
+  
 
 
 

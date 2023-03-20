@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { adminListUrl } from 'app/api/constant';
+import { ADMINLISTURL } from 'app/api/constant';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
@@ -21,7 +21,7 @@ export class AdminService {
 
   getAdminData(params):Observable<any>{
     this.blockUI.start('Loading...');
-    return this._http.get(adminListUrl,{params}).pipe(map((data)=>{
+    return this._http.get(ADMINLISTURL,{params}).pipe(map((data)=>{
       this.blockUI.stop();
       return data;
     }),catchError((error) => {

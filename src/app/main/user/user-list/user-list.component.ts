@@ -28,7 +28,7 @@ export class UserListComponent implements OnInit {
   // Public
   public sidebarToggleRef = false;
   public rows : any;
-  public selectedOption = 10;
+  public selectedOption = 5;
   public ColumnMode = ColumnMode;
   public rowsCount;
   public role_value;

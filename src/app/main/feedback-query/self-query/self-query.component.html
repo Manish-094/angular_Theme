@@ -6,7 +6,7 @@
         <div class="row justify-content-between">
 
           <div class="col-12 col-md-4">
-            <app-query></app-query>
+            <app-query (addFeedback)="sendFeedback()"></app-query>
 
           </div>
         </div>
@@ -72,7 +72,7 @@
               <div class="d-flex justify-content-between align-items-center m-1">
                 <label class="d-flex align-items-center pl-3"
                   >Show
-                  <select class="form-control mx-25" (change)="totalData()">
+                  <select class="form-control mx-25" (change)="totalData()" [(ngModel)]="selectedOption">
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="25">25</option>
@@ -87,11 +87,10 @@
               <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pb-md-0">
                 <label class="d-flex align-items-center ml-1 ml-md-0 pr-3"
                   >Search:<input
-                    [(ngModel)]="searchValue"
+                    [formControl]="searchValue"
                     name="searchValue"
                     type="search"
                     class="form-control ml-25"
-                    #myInput
                 /></label>
             
               </div>
@@ -99,8 +98,9 @@
           </div>
           <ngx-datatable
           [rows]="rows" 
-          [rowHeight]="50" 
+          [rowHeight]="'auto'" 
           class="bootstrap core-bootstrap table-responsive"
+          [limit]="5"
             [limit]="selectedOption" 
             [columnMode]="ColumnMode.force" 
             [headerHeight]="50" 
@@ -177,9 +177,9 @@
                       <!-- <a routerLink="/apps/user/user-view/{{ row.id }}" 
                         ><span [data-feather]="'file-text'" [size]="16" [class]="'mr-50'"></span> Details</a
                       > -->
-                      <a  (click)="modalOpen(modalBasic,row.status,row._id)" 
-                        ><span [data-feather]="'edit'" [size]="16" [class]="'mr-50'" class="text-primary"></span></a
-                      ><a (click)="deleteData(row._id)" 
+                      <!-- <a  (click)="modalOpen(modalBasic,row.status,row._id)" 
+                        ><span [data-feather]="'edit'" [size]="16" [class]="'mr-50'" class="text-primary"></span></a -->
+                      <a  (click)="deleteData(row._id)" *ngIf="row.status=='open'"
                         ><span [data-feather]="'trash'" [size]="16" [class]="'mr-50'" class="text-danger"></span></a
                       >
                     

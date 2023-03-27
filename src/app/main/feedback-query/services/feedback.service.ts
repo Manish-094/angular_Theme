@@ -11,8 +11,8 @@ import {
   FEEDBACKUPDATEURL, 
   FEEDBACKUSER, 
   GETALLFEEDBACK, 
-  GETASSIGNEDQUERYDATAURL, 
-  GETFEEDBACKURL 
+  GETFEEDBACKURL, 
+  REASSIGNEDQUERYDATA
 } from 'app/api/constant';
 
 
@@ -21,6 +21,7 @@ import {
 })
 export class FeedbackService {
 
+//loader
   @BlockUI() blockUI:NgBlockUI;
   
   constructor(
@@ -118,9 +119,9 @@ feedbackAssigned(params):Observable<any>{
 }
 
 //get aassignedUser of the department
-assigneduserDepartment(id:any,data:any):Observable<any>{
+assigneduserDepartment(id:any,data?:undefined):Observable<any>{
   this.blockUI.start('Loading...');
-  return this._http.post(FEEDBACKUSER+id,{data}).pipe(map(data=>{
+  return this._http.post(FEEDBACKUSER+id,data).pipe(map(data=>{
     this.blockUI.stop();
     return data
   }),catchError((error) => {
@@ -131,10 +132,10 @@ assigneduserDepartment(id:any,data:any):Observable<any>{
   }))
 }
 
-//get assigned query data
-getAssignedquerydata(params):Observable<any>{
+//post re-assigned query data
+postReassignedquerydata(id:any,data:any):Observable<any>{
   this.blockUI.start('Loading...');
-  return this._http.get(GETASSIGNEDQUERYDATAURL,{params}).pipe(map(data=>{
+  return this._http.post(REASSIGNEDQUERYDATA+id,data).pipe(map(data=>{
     this.blockUI.stop();
     return data
   }),catchError((error) => {

@@ -90,7 +90,7 @@ ngOnInit(): void {
   //    curr_uer.role = "User";
   // }
   if(curr_uer.user.user_type == 1){
-    curr_uer.role = "Admin";
+    curr_uer.role = "ADMIN";
   }
   else if(curr_uer.user.user_type == 2){
     curr_uer.role = "DELIVERY_MANAGER";
@@ -99,7 +99,7 @@ ngOnInit(): void {
     curr_uer.role = "HR_MANAGER";
   }
   else if(curr_uer.user.user_type == 9){
-    curr_uer.role = "Network Head"
+    curr_uer.role = "NETWORK_HEAD"
   }
   else if(curr_uer.user.user_type == 10){
     curr_uer.role = "ACCOUNT_HEAD"

@@ -1,6 +1,5 @@
 
-export const BASEURL :string = "http://172.16.1.129:3000";  //api endPoint
-
+export const BASEURL :string = "http://192.168.2.134:3000";  //api endPoint
 
 export const VERSION : string = "/v1";
 export const APIURL : string = BASEURL+VERSION
@@ -13,7 +12,7 @@ export const GETFEEDBACKURL = APIURL+"/feedback/get";          //get single feed
 export const FEEDBACKDELETEURL = APIURL+"/feedback/delete/";   //delete feedback data
 export const FEEDBACKASSIGNEDTO = APIURL+"/feedback/get-assigned";  //feedback assigned
 export const FEEDBACKUSER = APIURL+"/feedback/get-users/";           // feedback users   
-export const GETASSIGNEDQUERYDATAURL = APIURL+"/feedback/get-assigned"
+export const REASSIGNEDQUERYDATA = APIURL+"/feedback/re-assign/"    //re-assigned data
 
 
 //user-list api url =>slider

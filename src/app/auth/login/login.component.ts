@@ -160,6 +160,7 @@ onSubmit() {
             this.toastrService.success(res.message);
             this._authService.currentUserSubject.next(res.data)
             this.router.navigate(['main/dashboard']);
+             window.location.reload();
           }
         })
       }

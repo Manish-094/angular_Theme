@@ -13,7 +13,7 @@ export class GoToFormGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if(this.userService.canactivate()){
-      this.toastrservice.warning("Already Logged in !")
+      // this.toastrservice.warning("Already Logged in !")
       this.router.navigate(['/main/dashboard']);
       return false;
     }

@@ -10,5 +10,4 @@ export enum user_type{
     NETWORK_HEAD=9,
     ACCOUNT_HEAD=10,
     HR_MANAGER=11
-
 }

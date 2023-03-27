@@ -56,7 +56,7 @@
           <div class="col-md-6 col-12 py-3 ">
             <div class="d-flex justify-content-between align-items-center m-1">
               <label class="d-flex align-items-center pl-3">Show
-                <select class="form-control mx-25" (change)="totalData()">
+                <select class="form-control mx-25" (change)="totalData()" [(ngModel)]="selectedOption">
                   <option value="5">5</option>
                   <option value="10">10</option>
                   <option value="25">25</option>
@@ -68,16 +68,18 @@
           </div>
           <div class="col-md-6 col-12 d-flex justify-content-start justify-content-md-end">
             <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pb-md-0">
-              <label class="d-flex align-items-center ml-1 ml-md-0 pr-3">Search:<input [(ngModel)]="searchValue"
-                  name="searchValue" type="search" class="form-control ml-25" #myInput /></label>
+              <label class="d-flex align-items-center ml-1 ml-md-0 pr-3">Search:<input [formControl]="searchValue"
+                  name="searchValue" type="search" class="form-control ml-25"  /></label>
 
             </div>
           </div>
+          
         </div>
         <ngx-datatable 
         [rows]="rows" 
-        [rowHeight]="50" 
+        [rowHeight]="'auto'" 
         class="bootstrap core-bootstrap table-responsive"
+        [limit]="5"
           [limit]="selectedOption" 
           [columnMode]="ColumnMode.force" 
           [headerHeight]="50" 
@@ -87,8 +89,6 @@
           [externalPaging]="true" 
           (page)="page($event)" 
           #tableRowDetails>
-
-
           >
 
           <!-- for description -->
@@ -131,17 +131,16 @@
           <ngx-datatable-column name="requested_by" prop="requested_by.first_name" [minWidth]="100"></ngx-datatable-column>
 
 
-          <ngx-datatable-column name="feedback_status" prop="status" [minWidth]="100">
-            <ng-template let-status="value" ngx-datatable-cell-template>
-              <div class="badge badge-pill"  [ngClass]="{
-              
-                      'badge-light-success': status ==  'open',
-                      'badge-light-secondary': status == 'in_process',
-                      'badge-light-warning': status == 'closed',
-                      'badge-light-info': status == 'confirmed'
-                    }">
-
-                {{status}}
+          <ngx-datatable-column name="Status" prop="status" [minWidth]="100">
+            <ng-template ngx-datatable-cell-template let-row="row" let-status="value">
+              <div class="badge badge-pill"
+                   [ngClass]="{
+                     'badge-light-success': status == 'open',
+                     'badge-light-secondary': status =='in_process',
+                     'badge-light-primary': status == 'closed',
+                     'badge-light-warning': status == 'confirmed'
+                   }">
+                {{ status }}
               </div>
             </ng-template>
           </ngx-datatable-column>

@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { User, Role } from 'app/auth/models';
-import { user_type } from '../models/user_type.enum';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -55,9 +54,7 @@ export class AuthenticationService {
    * @param password
    * @returns user
    */
-  login(postData: LoginUserModel) {
-
-  }
+ 
 
   /**
    * User logout

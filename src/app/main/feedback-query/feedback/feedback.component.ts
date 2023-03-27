@@ -1,21 +1,20 @@
-import { fromEvent } from 'rxjs';
-import { Status } from 'app/status.enum';
+import { Status } from 'app/auth/models/status.enum';
 import { ToastrService } from 'ngx-toastr';
 import { HttpParams } from '@angular/common/http';
-import { debounceTime, map } from 'rxjs/operators';
+import { catchError, debounceTime, map, switchMap } from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FeedbackService } from '../services/feedback.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
-import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.service';
 import Swal from 'sweetalert2';
 import { 
   Component, 
-  ElementRef, 
   OnInit, 
   ViewChild, 
   ViewEncapsulation 
 } from '@angular/core';
+import { user_type } from 'app/auth/models/user_type.enum';
+import { department } from 'app/auth/models/department.enum';
 
 
 
@@ -28,8 +27,8 @@ import {
 })
 export class FeedbackComponent implements OnInit {
   
+  //decorator
   @ViewChild('tableRowDetails') tableRowDetails: any;
-  @ViewChild('myInput') myInput!: ElementRef
   @ViewChild(DatatableComponent) table: DatatableComponent;
 
 
@@ -37,17 +36,18 @@ export class FeedbackComponent implements OnInit {
   isFormValid : boolean = false
   query_id:any
   feedbackUpdateForm !:FormGroup
-  // Public variable
   public sidebarToggleRef = false;
   public rows : any;
   public assign_value:any;
-  public selectedOption = 5;
+  public selected = [];
+  public selectedOption:number = 5;
   public ColumnMode = ColumnMode;
   public rowsCount;
   public role_value;
   public status_value;
   public department_value;
-  public searchValue = '';
+  public searchValue = new FormControl();
+  public params = new HttpParams;
 
 
 
@@ -69,6 +69,7 @@ export class FeedbackComponent implements OnInit {
   //life cycle hook
   ngOnInit(): void {
     this.getfeedbackData();
+    this.searchFilter()
 
      this.feedbackUpdateForm = this._fb.group({
       status:['',Validators.required],
@@ -91,60 +92,91 @@ export class FeedbackComponent implements OnInit {
  getfeedbackData(params = {}){
   this._feedbackService.getAllFeedbackData(params).subscribe((res)=>{
     if(res.status == 1){
-      this._toastr.success(res.message)
-      this.rows = res.data.data;
-      
-      this.rowsCount = res.data.total;
-      console.log(this.rowsCount,1000);
-      console.log(this.rows,66)
-      console.log(res,54)
+      if(res.data == null){
+        this.rows = [];
+        this.rowsCount = 0;
+        this._toastr.error(res.message)
+      }
+      else{
+        this.rows = res.data.data;
+        this.rowsCount = res.data.total;
+      }
     }
-    this.setStatus(this.rows);
-    // this.filterData(this.rows);
+    this.setStatus();
 
   })
 }
 
 
+
 //pagination
 page(event){
-  console.log(event.offset+1);
-// this.getUserListData('page',event.offset+1)
-const params = new HttpParams()
+this.params = this.params
 .set('page', event.offset+1)
 .set('limit', this.selectedOption)
-this.getfeedbackData(params)
+this.getfeedbackData(this.params)
   
 }
 
 
 //SET STATUS
+setStatus(){
+  this.rows.forEach(row=>{
+   switch(row.status_log.slice(-1)[0].status){
+     case 1:
+       return row.status = 'open'
+     case 2:
+       return row.status = 'in_process'
+     case 3:
+       return row.status = 'closed'
+     case 4:
+       return row.status = 'confirmed'
+     default:
+       return  ''
+   }
+  })
+ }
 
-setStatus(rows){
-this.rows.forEach(row => {
-  if(row.status == 1){
-    row.status = "open"
-  }
-  else if(row.status == 2){
-    row.status = "in_process"
-  }
-  else if(row.status == 3){
-    row.status = "closed"
-  }
-  else{
-    row.status = "confirmed"
-  }
-})
-}
 
-//searching debounceTime
-ngAfterViewInit(): void {
-    const searchItem = fromEvent<any>(this.myInput.nativeElement,'keyup')
-    searchItem.pipe(map(data=>data.target.value),debounceTime(1000)).subscribe((res)=>{
-      const  params = new HttpParams()
-      .set('search',this.searchValue)
-      this.getfeedbackData(params)
-    })
+//search data
+searchFilter() {
+  this.searchValue.valueChanges
+    .pipe(
+      debounceTime(1500),
+      switchMap((lastValue) => {
+        this.params = this.params.delete("page");
+        if(lastValue==''){
+          this.params = this.params.delete("search");
+        }
+        else{
+          this.params = this.params.set("search", lastValue);
+        }
+        return this._feedbackService.getAllFeedbackData(this.params).pipe(
+          catchError(() => {
+            this.rows = [];
+            return [];
+          })
+        );
+      })
+    )
+    .subscribe(
+      (res: any) => {
+        if(res.data==null){
+          this.rows=[];
+          this.rowsCount=0;
+          this._toastr.error(res.message);
+        } else {
+          this.rows = res.data.data;
+          this.rowsCount = res.data.total;
+          // for set user-type,status,department
+          this.rows.map((row) => {
+            row.department = department[row.department];
+            row.user_type = user_type[row.user_type];
+            row.status = Status[row.status_log.slice(-1)[0].status];
+          });
+        }
+      }
+    );
 }
 
 
@@ -156,45 +188,11 @@ totalData() {
   this.getfeedbackData(params)
 }
 
-  /**
-   * filterUpdate
-   */
-  filterUpdate(event) {
-    const  params = new HttpParams()
-    .set('user_type',this.role_value)
-    .set('status',this.status_value)
-    .set('search',this.searchValue)
-    this.getfeedbackData(params)
-  }
-
-
-    /**
-   * Filter By Status
-   *
-   * @param event
-   */
-    filterByStatus(event: { value: any; }) {
-      const params = new HttpParams().set('status',event.value)
-      .set('user_type',this.role_value)
-       this.getfeedbackData(params)
-       this.status_value = event.value;
-    }
-
-      /**
-   * Filter Rows
-   *
-   * @param roleFilter
-   * @param planFilter
-   * @param statusFilter
-   */
-  
 
   // modal Basic
   modalOpen(modalBasic,status:any,id:any) {
     this.modalService.open(modalBasic);
-    this.query_id = id
-    // console.log(status);
-    
+    this.query_id = id    
     this.feedbackUpdateForm = this._fb.group({
       status:[Status[status],Validators.required],
       feedback_remark:[null]
@@ -217,13 +215,8 @@ deleteData(id: string) {
     confirmButtonText: 'Yes, delete it!'
   }).then((result) => {
     if (result.value) {
-      
-  console.log(id,99);
-  
-      
       this._feedbackService.deleteFeedbackData(id).subscribe(
         data => {
-          console.log(data,100);
           if(data.status == 1){
             this._toastr.success("deleted successfully !")
           this.getfeedbackData(HttpParams)
@@ -243,7 +236,6 @@ deleteData(id: string) {
         this._feedbackService.feedbackUpdate(this.query_id,data).subscribe(res=>{
           if(res.status == 1){
             this._toastr.success("updated successfully!")
-            console.log(data,55)
             this.feedbackUpdateForm.reset()
             this.getfeedbackData(HttpParams)
             this.modalService.dismissAll()
